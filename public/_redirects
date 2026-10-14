@@ -1,0 +1,11 @@
+# Single-page-app fallback for Netlify and Cloudflare Pages, which both read
+# this file. Every path is served the built index.html with a 200, and
+# react-router then renders the route -- /privacy-policy, /contact-us,
+# /mway-app and the rest work on a direct visit or a refresh, not only when
+# reached by clicking a link.
+#
+# No deployment platform is configured in this project, so this sits
+# alongside the dist/404.html emitted by vite.config.js. On a host that does
+# not read _redirects this file is inert; it is never served as a page.
+
+/*    /index.html   200

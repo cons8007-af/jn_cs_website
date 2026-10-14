@@ -1,14 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter, Link, NavLink, Routes, Route, useParams } from 'react-router-dom';
+import { BrowserRouter, Link, NavLink, Routes, Route, useParams, useLocation, useNavigate } from 'react-router-dom';
 import {
-  ArrowRight, BriefcaseBusiness, Building2, CarFront, CheckCircle2, ChevronLeft, ChevronRight,
-  Clock, GraduationCap, Headphones, Landmark, Mail, MapPin, Menu, MessageCircle, MonitorCog,
-  Phone, Send, ShieldCheck, Users, X
+  ArrowRight, BriefcaseBusiness, Building2, CarFront, CheckCircle2, ChevronDown,
+  ChevronLeft, ChevronRight, Clock, GraduationCap, Headphones, Landmark,
+  Laptop, Mail, MapPin, Menu, MessageCircle, MonitorCog, Phone,
+  Plane, Send, ShieldCheck, Users, X
 } from 'lucide-react';
+
 import logo from './assets/jn-logo.jpeg';
 import symbol from './assets/jn-symbol.jpeg';
-import heroBg from './assets/hero-bg.jpg';
+import mwayLogo from './assets/mway-logo.png';
+import corporateWaveBg from './assets/corporate-wave-bg.jpg';
+import autoImg from './assets/service-automobile.jpg';
+import travelsImg from './assets/service-travels.jpg';
+import admissionImg from './assets/service-admission.jpg';
+import bankingImg from './assets/service-banking.jpg';
+import realestateImg from './assets/service-realestate.jpg';
+import itsolutionsImg from './assets/service-itsolutions.jpg';
+import jobsImg from './assets/service-jobs.png';
+
+import { MwaySection, MwayAppPage, MwayLogo, MWAY_TAGLINE } from './mway.jsx';
+import {
+  PrivacyPolicy, TermsAndConditions, RefundCancellationPolicy,
+  ContactUsPage, AccountDeletion, DriverTermsPolicy, DriverPrivacyPolicy
+} from './policies.jsx';
+import { EnquiryForm, ApplicationForm } from './enquiry.jsx';
 import './styles.css';
 
 const phone = '9677796891';
@@ -16,150 +33,988 @@ const altPhone = '8695556550';
 const email = 'jnconsultancy26@gmail.com';
 const office = 'Shop No-9, C-Block, 5Star Complex, Opposite New Bus Stand, Perambalur.';
 
-const services = [
-  { id:'travels', title:'Travels', icon:CarFront, color:'blue', desc:'Pickup & drop, savari-based travel, tourist packages and bus booking.' },
-  { id:'admission', title:'Admission', icon:GraduationCap, color:'red', desc:'Tamil Nadu college and abroad admission guidance.' },
-  { id:'real-estate', title:'Real Estate', icon:Building2, color:'green', desc:'Land, property, rent, buying and selling assistance.' },
-  { id:'foreign-jobs', title:'Foreign Jobs', icon:BriefcaseBusiness, color:'purple', desc:'Guidance and support for overseas job opportunities.' },
-  { id:'banking', title:'Banking Services', icon:Landmark, color:'orange', desc:'Banking guidance, DSA and application support.' },
-  { id:'automobile', title:'Automobile', icon:CarFront, color:'cyan', desc:'Used car search, buyer guidance and seller coordination.' },
-  { id:'it-solutions', title:'IT Software & Solutions', icon:MonitorCog, color:'magenta', desc:'Websites, mobile apps, dashboards and custom software.' }
+const POSITIONS = [
+  'Telecalling Executive',
+  'Social Media Influencer',
+  'Software Developer Intern'
 ];
+
+// The 7 verified services in the exact order and naming as the MWAY mobile app
+export const CAROUSEL_SERVICES = [
+  {
+    id: 'travels',
+    title: 'Travels',
+    image: travelsImg,
+    icon: Plane,
+    iconBg: '#E0F2FE',
+    iconColor: '#0284C7',
+    tagline: 'Outstation Rides, Packages & Coach Bookings',
+    desc: 'Pickup & drop, savari-based travel, tourist packages, airport transfers and bus booking.'
+  },
+  {
+    id: 'admission',
+    title: 'Admission',
+    image: admissionImg,
+    icon: GraduationCap,
+    iconBg: '#DCFCE7',
+    iconColor: '#059669',
+    tagline: 'College Guidance & University Admissions',
+    desc: 'Tamil Nadu engineering, arts & science, medical, and abroad university admission guidance.'
+  },
+  {
+    id: 'land-property',
+    aliases: ['real-estate'],
+    title: 'Land & Property',
+    image: realestateImg,
+    icon: Building2,
+    iconBg: '#FEF3C7',
+    iconColor: '#D97706',
+    tagline: 'Verified Plots, Villas & Commercial Properties',
+    desc: 'Land, commercial property, residential plots, rentals, buying and selling assistance.'
+  },
+  {
+    id: 'jobs',
+    aliases: ['foreign-jobs'],
+    title: 'Jobs',
+    image: jobsImg,
+    icon: BriefcaseBusiness,
+    iconBg: '#FCE7F3',
+    iconColor: '#DB2777',
+    tagline: 'Overseas Employment & Career Opportunities',
+    desc: 'Guidance, documentation and verification support for overseas job opportunities.'
+  },
+  {
+    id: 'cars',
+    aliases: ['automobile'],
+    title: 'Cars',
+    image: autoImg,
+    icon: CarFront,
+    iconBg: '#EFF6FF',
+    iconColor: '#0866F5',
+    tagline: 'Certified Pre-Owned & Vehicle Coordination',
+    desc: 'Used car search, buyer guidance, vehicle inspection and seller coordination.'
+  },
+  {
+    id: 'banking',
+    title: 'Banking',
+    image: bankingImg,
+    icon: Landmark,
+    iconBg: '#E0E7FF',
+    iconColor: '#4F46E5',
+    tagline: 'DSA Facilitation, Loans & Financial Guidance',
+    desc: 'Personal & business loans, credit cards, DSA facilitation and complete financial support.'
+  },
+  {
+    id: 'it-solutions',
+    title: 'IT Software & Solutions',
+    image: itsolutionsImg,
+    icon: Laptop,
+    iconBg: '#EDE9FE',
+    iconColor: '#7C3AED',
+    tagline: 'Custom Web, Mobile Apps & Enterprise Systems',
+    desc: 'Modern web platforms, native mobile apps, cloud security, dashboards and custom software.'
+  }
+];
+
+export const ALL_SERVICES = [...CAROUSEL_SERVICES];
 
 const benefits = [
-  { icon:ShieldCheck, title:'Trusted & Reliable', desc:'100% genuine services and transparent process.' },
-  { icon:Clock, title:'Fast & Convenient', desc:'Save time with our hassle-free support.' },
-  { icon:Users, title:'Expert Guidance', desc:'Professional team to help you at every step.' },
-  { icon:Headphones, title:'24/7 Support', desc:'Always here for you, anytime.' }
+  {
+    icon: ShieldCheck,
+    title: 'Trusted & Reliable',
+    desc: '100% genuine services and transparent process.',
+    badgeBg: '#FEF3C7',
+    badgeColor: '#D97706'
+  },
+  {
+    icon: Clock,
+    title: 'Fast & Convenient',
+    desc: 'Save time with our hassle-free support.',
+    badgeBg: '#EFF6FF',
+    badgeColor: '#0866F5'
+  },
+  {
+    icon: Users,
+    title: 'Expert Guidance',
+    desc: 'Professional team to help you at every step.',
+    badgeBg: '#ECFDF5',
+    badgeColor: '#059669'
+  },
+  {
+    icon: Headphones,
+    title: 'Support During Business Hours',
+    desc: "We're here to help during our working hours.",
+    badgeBg: '#FAF5FF',
+    badgeColor: '#7C3AED'
+  }
 ];
 
-function Header(){
-  const [open,setOpen]=useState(false);
-  return <header className="header"><div className="wrap nav">
-    <Link to="/" className="brand"><img src={logo} alt="JN Consultancy Services"/><span><b>JN</b><small>CONSULTANCY SERVICES</small></span></Link>
-    <button className="hamb" onClick={()=>setOpen(!open)} aria-label="Open menu">{open?<X/>:<Menu/>}</button>
-    <nav className={open?'open':''}>
-      <NavLink to="/" onClick={()=>setOpen(false)}>Home</NavLink>
-      <NavLink to="/services" onClick={()=>setOpen(false)}>Services</NavLink>
-      <NavLink to="/careers" onClick={()=>setOpen(false)}>Careers</NavLink>
-      <NavLink to="/contact" onClick={()=>setOpen(false)}>Contact</NavLink>
-      <Link className="navbtn" to="/contact" onClick={()=>setOpen(false)}>Get Started <ArrowRight size={16}/></Link>
-    </nav>
-    <div className="headContact">
-      <a href={'tel:'+phone}><Phone size={14}/> {phone}</a>
-      <a href={'mailto:'+email}><Mail size={14}/> {email}</a>
-    </div>
-  </div></header>
+/**
+ * 3. Page 1 — Floating Glass Navbar
+ */
+function Header() {
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 15);
+    };
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const handleServicesClick = (e) => {
+    e.preventDefault();
+    setOpen(false);
+    if (location.pathname === '/') {
+      const el = document.getElementById('services');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      navigate('/services');
+    }
+  };
+
+  const handleHomeClick = (e) => {
+    if (location.pathname === '/') {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    setOpen(false);
+  };
+
+  const isHome = location.pathname === '/';
+
+  return (
+    <header className={`header ${scrolled ? 'scrolled' : ''}`}>
+      <div className="wrap nav">
+        <Link to="/" className="brand" onClick={handleHomeClick}>
+          <img src={logo} alt="JN Consultancy Services Logo" />
+          <div className="brandText">
+            <b>JN</b>
+            <small>CONSULTANCY SERVICES</small>
+          </div>
+        </Link>
+
+        <button
+          className="hamb"
+          onClick={() => setOpen(!open)}
+          aria-label={open ? 'Close navigation menu' : 'Open navigation menu'}
+          aria-expanded={open}
+        >
+          {open ? <X size={24} /> : <Menu size={24} />}
+        </button>
+
+        <nav className={open ? 'open' : ''} aria-label="Main Navigation">
+          <NavLink
+            to="/"
+            end
+            onClick={handleHomeClick}
+            className={({ isActive }) => (isActive && isHome ? 'active' : '')}
+          >
+            Home
+          </NavLink>
+          <a
+            href="#services"
+            onClick={handleServicesClick}
+            className={location.pathname === '/services' ? 'active' : ''}
+          >
+            Services
+          </a>
+          <NavLink to="/careers" onClick={() => setOpen(false)}>
+            Careers
+          </NavLink>
+          <NavLink to="/contact" onClick={() => setOpen(false)}>
+            Contact
+          </NavLink>
+          <Link className="getStartedBtn" to="/contact" onClick={() => setOpen(false)}>
+            <span>Get Started</span>
+            <ArrowRight size={16} className="btnArrow" />
+          </Link>
+
+          <div className="navMobileContact">
+            <a href={`tel:${phone}`}><Phone size={14} /> {phone}</a>
+            <a href={`mailto:${email}`}><Mail size={14} /> {email}</a>
+          </div>
+        </nav>
+
+        <div className="headContact">
+          <a href={`tel:${phone}`} aria-label={`Call us at ${phone}`}>
+            <Phone size={14} /> {phone}
+          </a>
+          <a href={`mailto:${email}`} aria-label={`Email us at ${email}`}>
+            <Mail size={14} /> {email}
+          </a>
+        </div>
+      </div>
+    </header>
+  );
 }
 
-function ServiceMarquee(){
-  const [paused,setPaused]=useState(false);
-  const items=[...services,...services];
-  return <div className="marquee" aria-label="Our services">
-    <button className="marqueeArrow left" onClick={()=>setPaused(p=>!p)} aria-label="Pause or resume"><ChevronLeft/></button>
-    <div className={'marquee-track'+(paused?' paused':'')}>
-      {items.map((s,i)=><Link to={'/services/'+s.id} className="marquee-item" key={s.id+i}><span>✦</span>{s.title}</Link>)}
-    </div>
-    <button className="marqueeArrow right" onClick={()=>setPaused(p=>!p)} aria-label="Pause or resume"><ChevronRight/></button>
-  </div>
-}
+/**
+ * 3. Page 1 — Hero Section
+ */
+function Hero() {
+  const scrollToServices = (e) => {
+    e.preventDefault();
+    const el = document.getElementById('services');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
-function Footer(){
-  return <>
-    <footer className="footer"><div className="wrap footer-grid">
-      <div className="footer-about"><img src={logo} className="footlogo" alt="JN Consultancy Services"/><p>One trusted place for multiple solutions.</p></div>
-      <div><h4>All Services</h4><div className="footer-services">{services.map(s=><Link key={s.id} to={'/services/'+s.id}>{s.title}</Link>)}</div></div>
-      <div><h4>Contact</h4><a href={'tel:'+phone}><Phone/> {phone}</a><a href={'tel:'+altPhone}><Phone/> {altPhone}</a><a href={'mailto:'+email}><Mail/> {email}</a></div>
-      <div><h4>Office</h4><p className="office"><MapPin/> {office}</p><Link className="footer-cta" to="/contact">Send an Enquiry <ArrowRight size={15}/></Link></div>
-    </div><div className="wrap copy">© {new Date().getFullYear()} JN Consultancy Services. All rights reserved.</div></footer>
-  </>
-}
+  return (
+    <section className="hero" style={{ backgroundImage: `url(${corporateWaveBg})` }}>
+      <div className="heroOverlay" />
+      <div className="wrap heroGrid">
+        {/* Left Column */}
+        <div className="heroCopy">
+          <div className="heroMwayLogoWrap">
+            <img src={mwayLogo} alt="MWAY App Logo" className="heroMwayLogo" />
+            <div className="heroLogoGlow" />
+          </div>
 
-const SPARKS = {
-  r1: [20, 110, 200, 290],
-  r2: [55, 130, 205, 250, 320],
-  r3: [10, 65, 150, 175, 235, 305, 340]
-};
+          <div className="heroTagline">My Way My growth My</div>
+          <h1>
+            One Stop Solution<br />
+            for <em>All Your Needs</em>
+          </h1>
+          <p>
+            JN Consultancy Services provides trusted, professional and complete
+            solutions for individuals, families and businesses.
+          </p>
 
-function Sparks(){
-  return <>
-    {Object.entries(SPARKS).map(([ring, angles]) => angles.map((a, i) => (
-      <span key={ring + i} className="spark-slot" style={{transform: `rotate(${a}deg) translateX(var(--${ring}))`}}>
-        <span className={'spark ' + ring} style={{animationDelay: (i * 0.4) + 's'}}></span>
-      </span>
-    )))}
-  </>
-}
-
-function SolarSystem(){
-  const step = 360/services.length;
-  return <div className="solar" aria-label="JN services solar system">
-    <div className="orbit orbit-one"></div><div className="orbit orbit-two"></div><div className="orbit orbit-three"></div>
-    <Sparks/>
-    <div className="sun-glow"></div>
-    <div className="sun"><img src={symbol} alt="JN logo"/><span>JN</span></div>
-    <div className="orbitRing">
-      {services.map((s,i)=>{
-        const angle=-90+i*step, I=s.icon;
-        return <div className="planet-slot" key={s.id} style={{transform:`rotate(${angle}deg) translateX(var(--orbit-r)) rotate(${-angle}deg)`}}>
-          <div className="planet-counter">
-            <Link to={'/services/'+s.id} className={'planet '+s.color}><span className="planet-icon"><I size={21} color="#fff"/></span><b>{s.title}</b></Link>
+          <div className="heroActions">
+            <a href="#services" onClick={scrollToServices} className="btn-hero-primary">
+              Explore Services <ArrowRight size={17} />
+            </a>
+            <Link to="/contact" className="btn-hero-secondary">
+              Contact Us
+            </Link>
           </div>
         </div>
-      })}
-    </div>
-  </div>
-}
 
-function HeroBenefits(){
-  return <div className="heroBenefits">
-    {benefits.map(b=>{const I=b.icon;return <div key={b.title}><span><I size={19}/></span><div><b>{b.title}</b><p>{b.desc}</p></div></div>})}
-  </div>
-}
-
-function Hero(){
-  return <>
-    <section className="hero" style={{backgroundImage:`url(${heroBg})`}}><div className="heroOverlay"></div><div className="wrap heroGrid">
-      <div className="heroCopy"><div className="eyebrow">YOUR DREAMS <i>|</i> OUR MISSION</div>
-        <h1>One Stop Solution<br/>for <em>All Your Needs</em></h1>
-        <p>JN Consultancy Services provides trusted, professional and complete solutions for individuals, families and businesses.</p>
-        <div className="actions"><Link className="btn primary" to="/services">Explore Services <ArrowRight/></Link><Link className="btn secondary" to="/contact">Contact Us</Link></div>
+        {/* Right Column: Glass Feature Panel */}
+        <div className="heroFeatureWrap">
+          <div className="heroFeaturePanel">
+            {benefits.map((b) => {
+              const Icon = b.icon;
+              return (
+                <div className="featureRow" key={b.title}>
+                  <div className="featureBadge" style={{ backgroundColor: b.badgeBg, color: b.badgeColor }}>
+                    <Icon size={20} />
+                  </div>
+                  <div className="featureContent">
+                    <b>{b.title}</b>
+                    <p>{b.desc}</p>
+                  </div>
+                  <div className="featureArrow">
+                    <ChevronRight size={18} />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
-      <SolarSystem/>
-      <HeroBenefits/>
-    </div></section>
-    <ServiceMarquee/>
-  </>
+
+      {/* Scroll Transition Indicator */}
+      <div className="heroScrollIndicator">
+        <a href="#services" onClick={scrollToServices} className="scrollMouse" aria-label="Scroll down to services">
+          <div className="mouseShape">
+            <span className="mouseWheel" />
+          </div>
+          <span className="scrollText">Scroll Down</span>
+          <ChevronDown size={14} className="scrollArrowIcon" />
+        </a>
+      </div>
+    </section>
+  );
 }
 
-function Card({s}){const I=s.icon;return <Link className="card" to={'/services/'+s.id}><div className={'ico '+s.color}><I/></div><h3>{s.title}</h3><p>{s.desc}</p><b>Learn more <ArrowRight/></b></Link>}
+/**
+ * 4. Page 2 / Services Section — 3D Animated Service Carousel & Pills
+ */
+function ServiceCarousel() {
+  const [activeIdx, setActiveIdx] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const carouselRef = useRef(null);
+  const touchStartX = useRef(0);
+  const total = CAROUSEL_SERVICES.length;
+  const navigate = useNavigate();
 
-function Home(){return <>
-  <Hero/>
-  <section className="section wrap"><div className="sectionHead"><div><div className="eyebrow">WHAT WE DO</div><h2>All our services, <em>in one place.</em></h2></div><Link to="/services" className="viewAll">View all <ArrowRight/></Link></div><div className="grid">{services.map(s=><Card s={s} key={s.id}/>)}</div></section>
-  <section className="why"><div className="wrap whyGrid"><div><div className="eyebrow">WHY JN</div><h2>Guidance that keeps things <em>simple.</em></h2><p>Multiple service categories, one professional point of contact. Get information, submit enquiries and connect with the right team.</p><Link className="btn primary" to="/contact">Talk to Our Team <ArrowRight/></Link></div><div className="whyCards"><div><Users/><b>People-first support</b><p>Clear communication from enquiry to assistance.</p></div><div><CheckCircle2/><b>Multiple solutions</b><p>Different needs, one trusted platform.</p></div><div><CheckCircle2/><b>Professional approach</b><p>Structured and service-focused support.</p></div><div><MessageCircle/><b>Direct support</b><p>Connect with our team when needed.</p></div></div></div></section>
-  <section className="cta"><div className="wrap ctaInner"><div><div className="eyebrow light">READY WHEN YOU ARE</div><h2>Let's find the right solution for you.</h2><p>Tell us what you need and our team will guide you.</p></div><Link className="btn white" to="/contact">Start an Enquiry <ArrowRight/></Link></div></section>
-</>}
+  const nextSlide = useCallback(() => {
+    setActiveIdx((prev) => (prev + 1) % total);
+  }, [total]);
 
-function PageHero({eyebrow,title,text}){return <section className="pageHero"><div className="wrap"><div className="eyebrow">{eyebrow}</div><h1>{title}</h1>{text&&<p>{text}</p>}</div></section>}
+  const prevSlide = useCallback(() => {
+    setActiveIdx((prev) => (prev - 1 + total) % total);
+  }, [total]);
 
-function Services(){return <><PageHero eyebrow="OUR SERVICES" title={<>Solutions for <em>real-world needs.</em></>} text="Explore all seven JN Consultancy Services and choose the support you need."/><section className="section wrap"><div className="grid">{services.map(s=><Card s={s} key={s.id}/>)}</div></section></>}
+  // Automatic animation with pause on hover/interaction & reduced motion check
+  useEffect(() => {
+    if (isPaused) return;
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (media.matches) return;
 
-function Detail(){
-  const {id}=useParams(); const s=services.find(x=>x.id===id);
-  if(!s) return <PageHero eyebrow="404" title={<>Service <em>not found.</em></>} text="Please choose one of our seven services."/>;
-  const I=s.icon;
-  const points=['Professional guidance','Requirement-based support','Clear communication','Application / coordination support','Direct team assistance','Follow-up support'];
-  return <><PageHero eyebrow={s.title} title={<>{s.title} <em>made simpler.</em></>} text={s.desc}/><section className="section wrap"><div className="detail"><div className="detailMain"><div className={'bigico '+s.color}><I/></div><h2>How we can help</h2><p>Our team can understand your requirement, explain the next steps and coordinate the appropriate assistance.</p><div className="points">{points.map(x=><div key={x}><CheckCircle2/> {x}</div>)}</div><Link className="btn primary" to="/contact">Enquire about {s.title} <ArrowRight/></Link></div><aside><h3>Need help?</h3><p>Talk to our team for service information and next steps.</p><a href={'tel:'+phone}><Phone/> {phone}</a><a href={'mailto:'+email}><Mail/> {email}</a><Link className="btn secondary full" to="/contact">Send an Enquiry</Link></aside></div></section></>
+    const timer = setInterval(() => {
+      nextSlide();
+    }, 4500);
+
+    return () => clearInterval(timer);
+  }, [isPaused, nextSlide]);
+
+  // Keyboard navigation
+  const handleKeyDown = (e) => {
+    if (e.key === 'ArrowLeft') {
+      prevSlide();
+    } else if (e.key === 'ArrowRight') {
+      nextSlide();
+    }
+  };
+
+  // Touch swipe support
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e) => {
+    const touchEndX = e.changedTouches[0].clientX;
+    const delta = touchEndX - touchStartX.current;
+    if (delta > 40) {
+      prevSlide();
+    } else if (delta < -40) {
+      nextSlide();
+    }
+  };
+
+  return (
+    <section id="services" className="servicesSection">
+      <div className="wrap">
+        {/* Section Heading */}
+        <div className="servicesHeader">
+          <div className="servicesEyebrow">O U R &nbsp; S E R V I C E S</div>
+          <h2>
+            Explore <em>Our Services</em>
+          </h2>
+          <p className="servicesSubtitle">
+            Complete solutions for your dreams, growth and future – all in one place.
+          </p>
+          <div className="servicesPillDivider" />
+        </div>
+
+        {/* 3D Animated Carousel Stage */}
+        <div
+          className="carouselContainer"
+          ref={carouselRef}
+          tabIndex={0}
+          onKeyDown={handleKeyDown}
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+          aria-label="3D Service Image Carousel"
+        >
+          {/* Controls: Left & Right Arrows */}
+          <button
+            className="carouselNavBtn prev"
+            onClick={prevSlide}
+            aria-label="Previous service slide"
+          >
+            <ChevronLeft size={24} />
+          </button>
+          <button
+            className="carouselNavBtn next"
+            onClick={nextSlide}
+            aria-label="Next service slide"
+          >
+            <ChevronRight size={24} />
+          </button>
+
+          {/* Cards Track */}
+          <div className="carouselTrack">
+            {CAROUSEL_SERVICES.map((item, idx) => {
+              let offset = idx - activeIdx;
+              if (offset > total / 2) offset -= total;
+              if (offset < -total / 2) offset += total;
+
+              const isCenter = offset === 0;
+              const absOffset = Math.abs(offset);
+              const Icon = item.icon;
+
+              return (
+                <div
+                  key={item.id}
+                  className={`carouselCard ${isCenter ? 'active' : ''} offset-${offset}`}
+                  style={{
+                    '--offset': offset,
+                    '--abs-offset': absOffset
+                  }}
+                  onClick={() => {
+                    if (isCenter) {
+                      navigate(`/services/${item.id}`);
+                    } else {
+                      setActiveIdx(idx);
+                    }
+                  }}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`${item.title} - ${isCenter ? 'Click to view details' : 'Click to bring to center'}`}
+                >
+                  <div className="cardImageWrapper">
+                    <img
+                      src={item.image}
+                      alt={`${item.title} illustration`}
+                      loading={idx < 3 ? 'eager' : 'lazy'}
+                    />
+                    <div className="cardGlassOverlay">
+                      <div className="cardBadge">
+                        <Icon size={16} />
+                        <span>{item.title}</span>
+                      </div>
+                      <h3>{item.title}</h3>
+                      <p>{item.tagline}</p>
+                    </div>
+                  </div>
+                  <div className="cardFloorReflection" />
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Pagination Dots */}
+          <div className="carouselDots" role="tablist" aria-label="Carousel pagination dots">
+            {CAROUSEL_SERVICES.map((s, i) => (
+              <button
+                key={s.id}
+                role="tab"
+                aria-selected={i === activeIdx}
+                aria-label={`Switch to slide ${i + 1}: ${s.title}`}
+                className={`dot ${i === activeIdx ? 'active' : ''}`}
+                onClick={() => setActiveIdx(i)}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* 4.D: Six Clickable Service Buttons Underneath */}
+        <div className="servicePillsGrid" aria-label="Quick Service Navigation">
+          {CAROUSEL_SERVICES.map((s, i) => {
+            const Icon = s.icon;
+            const isActive = i === activeIdx;
+            return (
+              <Link
+                to={`/services/${s.id}`}
+                key={s.id}
+                className={`servicePillBtn ${isActive ? 'active' : ''}`}
+                onMouseEnter={() => setActiveIdx(i)}
+                aria-label={`View ${s.title} services`}
+              >
+                <span
+                  className="pillIconBadge"
+                  style={{ backgroundColor: s.iconBg, color: s.iconColor }}
+                >
+                  <Icon size={20} />
+                </span>
+                <span className="pillTitle">{s.title}</span>
+                <span className="pillArrowCircle">
+                  <ArrowRight size={14} />
+                </span>
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
 }
 
-function Careers(){return <><PageHero eyebrow="JOIN OUR TEAM" title={<>Build your career with <em>JN.</em></>} text="We are looking for motivated people across telecalling, social media and software development."/><section className="section wrap formGrid"><div><h2>Current opportunities</h2>{['Telecalling Executive','Social Media Influencer','Software Developer Intern'].map((x,i)=><div className="job" key={x}><BriefcaseBusiness/><div><h3>{x}</h3><p>{i===0?'Customer communication, follow-ups and service coordination.':i===1?'Content creation, audience engagement and brand promotion.':'Work on websites, apps, dashboards and digital solutions.'}</p></div></div>)}</div><ApplicationForm/></section></>}
-function ApplicationForm(){const [ok,setOk]=useState(false);return <form className="form" onSubmit={e=>{e.preventDefault();setOk(true)}}><h3>Apply now</h3><p>Fill in your details and upload your resume.</p><label>Position<select required><option value="">Select position</option><option>Telecalling Executive</option><option>Social Media Influencer</option><option>Software Developer Intern</option></select></label><div className="two"><label>Name<input required/></label><label>Phone<input required type="tel"/></label></div><label>Email<input required type="email"/></label><label>Location<input/></label><label>Qualification<input/></label><label>Resume<input required type="file" accept=".pdf,.doc,.docx"/></label><label>Message<textarea rows="4"/></label><button className="btn primary full">Submit Application <Send/></button>{ok&&<div className="success">Application form submitted. Backend storage will be connected next.</div>}</form>}
+/**
+ * 5. Additional Homepage Content — Why Choose Us
+ */
+function WhyChooseUs() {
+  return (
+    <section className="whySection">
+      <div className="wrap whyGrid">
+        <div className="whyCopy">
+          <div className="whyEyebrow">WHY CHOOSE US</div>
+          <h2>
+            Built on trust, delivered with <em>excellence.</em>
+          </h2>
+          <p>
+            Multiple service categories, one professional point of contact. Get verified
+            information, transparent guidance, and dedicated support every step of the way.
+          </p>
+          <Link className="btn-hero-primary" to="/contact">
+            Talk to Our Team <ArrowRight size={16} />
+          </Link>
+        </div>
 
-function Contact(){const [ok,setOk]=useState(false);return <><PageHero eyebrow="CONTACT US" title={<>Let's talk about <em>what you need.</em></>} text="Send an enquiry or contact our team directly."/><section className="section wrap contactGrid"><div><div className="contact"><Phone/><div><small>Call us</small><a href={'tel:'+phone}>{phone}</a><a href={'tel:'+altPhone}>{altPhone}</a></div></div><div className="contact"><Mail/><div><small>Email</small><a href={'mailto:'+email}>{email}</a></div></div><div className="contact"><MapPin/><div><small>Office</small><p>{office}</p></div></div></div><form className="form" onSubmit={e=>{e.preventDefault();setOk(true)}}><h3>Send an enquiry</h3><div className="two"><label>Name<input required/></label><label>Phone<input required type="tel"/></label></div><label>Email<input type="email"/></label><label>Service<select><option>General enquiry</option>{services.map(s=><option key={s.id}>{s.title}</option>)}</select></label><label>Preferred contact<select><option>Phone</option><option>WhatsApp</option><option>Email</option></select></label><label>Message<textarea required rows="6"/></label><button className="btn primary full">Send Enquiry <Send/></button>{ok&&<div className="success">Thanks! Your enquiry has been captured in this demo version.</div>}</form></section></>}
+        <div className="whyCardsGrid">
+          <div className="whyCard">
+            <div className="whyCardIcon" style={{ backgroundColor: '#FEF3C7', color: '#D97706' }}>
+              <ShieldCheck size={22} />
+            </div>
+            <b>Trusted & Reliable</b>
+            <p>100% genuine services with transparent process and honest guidance.</p>
+          </div>
+          <div className="whyCard">
+            <div className="whyCardIcon" style={{ backgroundColor: '#EFF6FF', color: '#0866F5' }}>
+              <Clock size={22} />
+            </div>
+            <b>Fast & Convenient</b>
+            <p>Save valuable time with swift processing and hassle-free support.</p>
+          </div>
+          <div className="whyCard">
+            <div className="whyCardIcon" style={{ backgroundColor: '#ECFDF5', color: '#059669' }}>
+              <Users size={22} />
+            </div>
+            <b>Expert Guidance</b>
+            <p>Knowledgeable specialists providing step-by-step assistance for your needs.</p>
+          </div>
+          <div className="whyCard">
+            <div className="whyCardIcon" style={{ backgroundColor: '#FAF5FF', color: '#7C3AED' }}>
+              <Headphones size={22} />
+            </div>
+            <b>Business Hours Support</b>
+            <p>Prompt, dedicated communication throughout working hours whenever you need us.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
-function Chat(){const [open,setOpen]=useState(false);return <div className="chat"><div className={open?'chatbox show':'chatbox'}><div className="chatHead"><b>JN Support</b><button onClick={()=>setOpen(false)}><X size={17}/></button></div><div className="chatBody"><p>Hi 👋 How can we help you?</p><p>Ask about Travels, Admission, Real Estate, Foreign Jobs, Banking, Automobile or IT Solutions.</p><Link to="/contact" onClick={()=>setOpen(false)}>Connect with our team <ArrowRight size={14}/></Link></div><div className="chatFoot">Direct support: {phone}</div></div><button className="chatFab" onClick={()=>setOpen(!open)} aria-label="Chat support">{open?<X/>:<MessageCircle/>}</button></div>}
+/**
+ * Service Grid Card for /services page
+ */
+function ServiceCard({ s }) {
+  const Icon = s.icon;
+  return (
+    <Link className="serviceGridCard" to={`/services/${s.id}`}>
+      <div className="cardIconBadge" style={{ backgroundColor: s.iconBg || '#EAF5FF', color: s.iconColor || '#0866F5' }}>
+        <Icon size={24} />
+      </div>
+      <h3>{s.title}</h3>
+      <p>{s.desc}</p>
+      <b>
+        Learn more <ArrowRight size={15} />
+      </b>
+    </Link>
+  );
+}
 
-function App(){return <><Header/><main><Routes><Route path="/" element={<Home/>}/><Route path="/services" element={<Services/>}/><Route path="/services/:id" element={<Detail/>}/><Route path="/careers" element={<Careers/>}/><Route path="/contact" element={<Contact/>}/><Route path="*" element={<PageHero eyebrow="404" title={<>Page <em>not found.</em></>} text="The page you're looking for doesn't exist."/>}/></Routes></main><Footer/><Chat/></>}
+/**
+ * Main Home Page
+ */
+function Home() {
+  return (
+    <>
+      <Hero />
+      <ServiceCarousel />
+      <WhyChooseUs />
+      
+      {/* Ready to find solution CTA */}
+      <section className="enquiryBannerSection">
+        <div className="wrap">
+          <div className="enquiryBannerCard">
+            <div className="bannerText">
+              <div className="bannerEyebrow">READY WHEN YOU ARE</div>
+              <h2>Let's find the right solution for you.</h2>
+              <p>Tell us what you need and our professional team will guide you promptly.</p>
+            </div>
+            <Link className="btn-banner-cta" to="/contact">
+              Start an Enquiry <ArrowRight size={17} />
+            </Link>
+          </div>
+        </div>
+      </section>
 
-createRoot(document.getElementById('root')).render(<BrowserRouter><App/></BrowserRouter>);
+      {/* MWAY Mobile App Section */}
+      <MwaySection />
+    </>
+  );
+}
+
+function PageHero({ eyebrow, title, text }) {
+  return (
+    <section className="pageHero">
+      <div className="wrap">
+        <div className="pageHeroEyebrow">{eyebrow}</div>
+        <h1>{title}</h1>
+        {text && <p className="pageHeroText">{text}</p>}
+      </div>
+    </section>
+  );
+}
+
+function ServicesPage() {
+  return (
+    <>
+      <PageHero
+        eyebrow="OUR SERVICES"
+        title={<>Solutions for <em>real-world needs.</em></>}
+        text="Explore all JN Consultancy Services verticals and select the tailored assistance you need."
+      />
+      <section className="section wrap">
+        <div className="servicesCatalogGrid">
+          {ALL_SERVICES.map((s) => (
+            <ServiceCard s={s} key={s.id} />
+          ))}
+        </div>
+      </section>
+    </>
+  );
+}
+
+function Detail() {
+  const { id } = useParams();
+  const s = ALL_SERVICES.find((x) => x.id === id || x.aliases?.includes(id));
+
+  if (!s) {
+    return (
+      <PageHero
+        eyebrow="404"
+        title={<>Service <em>not found.</em></>}
+        text="Please select one of our verified services."
+      />
+    );
+  }
+
+  const Icon = s.icon;
+  const points = [
+    'Professional requirement assessment and guidance',
+    'Requirement-based personalized support',
+    'Clear and transparent communication',
+    'End-to-end application & coordination assistance',
+    'Direct team communication and updates',
+    'Post-service follow-up and verification'
+  ];
+
+  return (
+    <>
+      <PageHero
+        eyebrow={s.title.toUpperCase()}
+        title={<>{s.title} <em>made simpler.</em></>}
+        text={s.desc}
+      />
+      <section className="section wrap">
+        <div className="detailLayout">
+          <div className="detailMain">
+            {s.image && (
+              <div className="detailCoverImage">
+                <img src={s.image} alt={s.title} />
+              </div>
+            )}
+            <div className="detailHeadingGroup">
+              <div className="detailIconBadge" style={{ backgroundColor: s.iconBg || '#EAF5FF', color: s.iconColor || '#0866F5' }}>
+                <Icon size={28} />
+              </div>
+              <div>
+                <h2>Comprehensive {s.title} Support</h2>
+                <p>{s.tagline || s.desc}</p>
+              </div>
+            </div>
+
+            <div className="detailBodyText">
+              <p>
+                Our experienced team understands your specific requirements, guides you through every step,
+                and manages all documentation and coordination smoothly.
+              </p>
+            </div>
+
+            <div className="detailPoints">
+              {points.map((x) => (
+                <div key={x} className="pointItem">
+                  <CheckCircle2 size={18} color="#0866F5" />
+                  <span>{x}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="detailActionArea">
+              <Link className="btn-hero-primary" to="/contact">
+                Enquire about {s.title} <ArrowRight size={16} />
+              </Link>
+            </div>
+          </div>
+
+          <aside className="detailAside">
+            <h3>Need Assistance?</h3>
+            <p>Speak directly with our service specialists for complete guidance.</p>
+            <div className="asideContactList">
+              <a href={`tel:${phone}`}>
+                <Phone size={16} /> {phone}
+              </a>
+              <a href={`mailto:${email}`}>
+                <Mail size={16} /> {email}
+              </a>
+            </div>
+            <Link className="btn-aside-cta" to="/contact">
+              Send an Enquiry
+            </Link>
+          </aside>
+        </div>
+      </section>
+    </>
+  );
+}
+
+function Careers() {
+  return (
+    <>
+      <PageHero
+        eyebrow="JOIN OUR TEAM"
+        title={<>Build your career with <em>JN.</em></>}
+        text="We are looking for motivated candidates across telecalling, social media engagement, and modern software development."
+      />
+      <section className="section wrap formGrid">
+        <div className="careersList">
+          <h2>Current Opportunities</h2>
+          {POSITIONS.map((x, i) => (
+            <div className="jobCard" key={x}>
+              <div className="jobIconWrap">
+                <BriefcaseBusiness size={22} color="#0866F5" />
+              </div>
+              <div>
+                <h3>{x}</h3>
+                <p>
+                  {i === 0
+                    ? 'Customer communication, requirement gathering, follow-ups, and service coordination.'
+                    : i === 1
+                    ? 'Content creation, social media engagement, audience interaction, and brand promotion.'
+                    : 'Building modern web applications, native mobile apps, dashboards, and digital solutions.'}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <ApplicationForm positions={POSITIONS} />
+      </section>
+    </>
+  );
+}
+
+function Contact() {
+  return (
+    <>
+      <PageHero
+        eyebrow="CONTACT US"
+        title={<>Let's talk about <em>what you need.</em></>}
+        text="Send an online enquiry or connect directly with our support team."
+      />
+      <section className="section wrap contactGrid">
+        <div className="contactCards">
+          <div className="contactCard">
+            <div className="contactIconCircle">
+              <Phone size={22} color="#0866F5" />
+            </div>
+            <div>
+              <small>Call us directly</small>
+              <a href={`tel:${phone}`}>{phone}</a>
+              <a href={`tel:${altPhone}`}>{altPhone}</a>
+            </div>
+          </div>
+          <div className="contactCard">
+            <div className="contactIconCircle">
+              <Mail size={22} color="#0866F5" />
+            </div>
+            <div>
+              <small>Email our desk</small>
+              <a href={`mailto:${email}`}>{email}</a>
+            </div>
+          </div>
+          <div className="contactCard">
+            <div className="contactIconCircle">
+              <MapPin size={22} color="#0866F5" />
+            </div>
+            <div>
+              <small>Visit our office</small>
+              <p>{office}</p>
+            </div>
+          </div>
+        </div>
+        <EnquiryForm services={ALL_SERVICES} />
+      </section>
+    </>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="footer">
+      <div className="wrap footerGrid">
+        <div className="footerAbout">
+          <div className="footerBrandHeader">
+            <img src={logo} className="footlogo" alt="JN Consultancy Services" />
+            <div>
+              <b>JN</b>
+              <small>CONSULTANCY SERVICES</small>
+            </div>
+          </div>
+          <p>One trusted destination for multiple life and business solutions.</p>
+          <div className="footMway">
+            <MwayLogo size={52} />
+            <div>
+              <b>MWAY</b>
+              <span>{MWAY_TAGLINE}</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h4>Services</h4>
+          <div className="footerServicesList">
+            {ALL_SERVICES.map((s) => (
+              <Link key={s.id} to={`/services/${s.id}`}>
+                {s.title}
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <h4>Direct Contact</h4>
+          <div className="footerContactList">
+            <a href={`tel:${phone}`}><Phone size={14} /> {phone}</a>
+            <a href={`tel:${altPhone}`}><Phone size={14} /> {altPhone}</a>
+            <a href={`mailto:${email}`}><Mail size={14} /> {email}</a>
+          </div>
+        </div>
+
+        <div>
+          <h4>Registered Office</h4>
+          <p className="officeAddress">
+            <MapPin size={16} /> {office}
+          </p>
+          <Link className="footerCtaBtn" to="/contact">
+            Send an Enquiry <ArrowRight size={14} />
+          </Link>
+        </div>
+      </div>
+
+      <div className="wrap footLegal">
+        <Link to="/privacy-policy">Privacy Policy</Link>
+        <Link to="/terms-and-conditions">Terms and Conditions</Link>
+        <Link to="/refund-cancellation-policy">Refund & Cancellation</Link>
+        <Link to="/driver-terms">Driver Partner Terms</Link>
+        <Link to="/driver-privacy">Driver Privacy Policy</Link>
+        <Link to="/contact-us">Contact Us</Link>
+        <Link to="/account-deletion">Account Deletion</Link>
+        <Link to="/mway-app">MWAY App Info</Link>
+      </div>
+
+      <div className="wrap copy">
+        © {new Date().getFullYear()} JN Consultancy Services. All rights reserved.
+      </div>
+    </footer>
+  );
+}
+
+function Chat() {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="chat">
+      <div className={`chatbox ${open ? 'show' : ''}`} role="dialog" aria-label="Customer support chat">
+        <div className="chatHead">
+          <b>JN Support Desk</b>
+          <button onClick={() => setOpen(false)} aria-label="Close chat">
+            <X size={17} />
+          </button>
+        </div>
+        <div className="chatBody">
+          <p>Hi 👋 Welcome to JN Consultancy Services!</p>
+          <p>How can our team help you today?</p>
+          <p className="chatServicesNote">
+            Ask about Travels, Admission, Land & Property, Jobs, Cars, Banking, or IT Software & Solutions.
+          </p>
+          <Link to="/contact" onClick={() => setOpen(false)} className="chatConnectBtn">
+            Connect with our team <ArrowRight size={14} />
+          </Link>
+        </div>
+        <div className="chatFoot">Direct Call Support: {phone}</div>
+      </div>
+      <button
+        className="chatFab"
+        onClick={() => setOpen(!open)}
+        aria-label="Toggle customer chat support"
+      >
+        {open ? <X size={22} /> : <MessageCircle size={22} />}
+      </button>
+    </div>
+  );
+}
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, [pathname]);
+  return null;
+}
+
+function App() {
+  return (
+    <>
+      <ScrollToTop />
+      <Header />
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/services" element={<ServicesPage />} />
+          <Route path="/services/:id" element={<Detail />} />
+          <Route path="/careers" element={<Careers />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/mway-app" element={<MwayAppPage />} />
+          {/* Canonical and Alias Legal Routes */}
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+          <Route path="/terms" element={<TermsAndConditions />} />
+          <Route path="/terms-of-service" element={<TermsAndConditions />} />
+          <Route path="/terms-conditions" element={<TermsAndConditions />} />
+          <Route path="/refund-cancellation-policy" element={<RefundCancellationPolicy />} />
+          <Route path="/refund-policy" element={<RefundCancellationPolicy />} />
+          <Route path="/refund" element={<RefundCancellationPolicy />} />
+          <Route path="/cancellation-policy" element={<RefundCancellationPolicy />} />
+          <Route path="/refund%20cancellation%20policy" element={<RefundCancellationPolicy />} />
+          <Route path="/refund cancellation policy" element={<RefundCancellationPolicy />} />
+          <Route path="/terms%20and%20conditions" element={<TermsAndConditions />} />
+          <Route path="/terms and conditions" element={<TermsAndConditions />} />
+          <Route path="/contact-us" element={<ContactUsPage />} />
+          <Route path="/account-deletion" element={<AccountDeletion />} />
+          {/* Driver Partner Legal Routes */}
+          <Route path="/driver-terms" element={<DriverTermsPolicy />} />
+          <Route path="/driver-terms-and-conditions" element={<DriverTermsPolicy />} />
+          <Route path="/driver-privacy" element={<DriverPrivacyPolicy />} />
+          <Route path="/driver-privacy-policy" element={<DriverPrivacyPolicy />} />
+          <Route
+            path="*"
+            element={
+              <PageHero
+                eyebrow="404"
+                title={<>Page <em>not found.</em></>}
+                text="The page you're looking for doesn't exist."
+              />
+            }
+          />
+        </Routes>
+      </main>
+      <Footer />
+      <Chat />
+    </>
+  );
+}
+
+createRoot(document.getElementById('root')).render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+);
