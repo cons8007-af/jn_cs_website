@@ -279,7 +279,7 @@ function Hero() {
             <div className="heroLogoGlow" />
           </div>
 
-          <div className="heroTagline">My Way My growth My</div>
+          <div className="heroTagline">My Way. My Growth. My Journey.</div>
           <h1>
             One Stop Solution<br />
             for <em>All Your Needs</em>
