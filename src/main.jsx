@@ -25,6 +25,7 @@ import {
   PrivacyPolicy, TermsAndConditions, RefundCancellationPolicy,
   ContactUsPage, AccountDeletion, DriverTermsPolicy, DriverPrivacyPolicy
 } from './policies.jsx';
+import { LiveTrackingWebPage } from './track.jsx';
 import { EnquiryForm, ApplicationForm } from './enquiry.jsx';
 import './styles.css';
 
@@ -995,6 +996,11 @@ function App() {
           <Route path="/driver-terms-and-conditions" element={<DriverTermsPolicy />} />
           <Route path="/driver-privacy" element={<DriverPrivacyPolicy />} />
           <Route path="/driver-privacy-policy" element={<DriverPrivacyPolicy />} />
+          <Route path="/driver-refund-policy" element={<RefundCancellationPolicy />} />
+          <Route path="/driver-cancellation-policy" element={<RefundCancellationPolicy />} />
+          {/* Public Live Tracking */}
+          <Route path="/track" element={<LiveTrackingWebPage />} />
+          <Route path="/track/:token" element={<LiveTrackingWebPage />} />
           <Route
             path="*"
             element={
