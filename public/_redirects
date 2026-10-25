@@ -1,11 +1,19 @@
-# Single-page-app fallback for Netlify and Cloudflare Pages, which both read
-# this file. Every path is served the built index.html with a 200, and
-# react-router then renders the route -- /privacy-policy, /contact-us,
-# /mway-app and the rest work on a direct visit or a refresh, not only when
-# reached by clicking a link.
-#
-# No deployment platform is configured in this project, so this sits
-# alongside the dist/404.html emitted by vite.config.js. On a host that does
-# not read _redirects this file is inert; it is never served as a page.
+# Canonical 301 Redirects for Duplicate / Alias Routes
+/services/real-estate              /services/land-property             301!
+/services/foreign-jobs             /services/jobs                      301!
+/services/automobile               /services/cars                      301!
+/privacy                           /privacy-policy                     301!
+/terms                             /terms-and-conditions               301!
+/terms-of-service                  /terms-and-conditions               301!
+/terms-conditions                  /terms-and-conditions               301!
+/refund                            /refund-cancellation-policy         301!
+/refund-policy                     /refund-cancellation-policy         301!
+/cancellation-policy               /refund-cancellation-policy         301!
+/contact-us                        /contact                            301!
+/driver-terms-and-conditions       /driver-terms                       301!
+/driver-privacy-policy             /driver-privacy                     301!
+/driver-refund-policy              /refund-cancellation-policy         301!
+/driver-cancellation-policy        /refund-cancellation-policy         301!
 
-/*    /index.html   200
+# SPA Fallback for Netlify and Cloudflare Pages
+/*                                 /index.html                         200

@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter, Link, NavLink, Routes, Route, useParams, useLocation, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Link, NavLink, Routes, Route, useParams, useLocation, useNavigate, Navigate } from 'react-router-dom';
 import {
   ArrowRight, BriefcaseBusiness, Building2, CarFront, CheckCircle2, ChevronDown,
   ChevronLeft, ChevronRight, Clock, GraduationCap, Headphones, Landmark,
   Laptop, Mail, MapPin, Menu, MessageCircle, MonitorCog, Phone,
-  Plane, Send, ShieldCheck, Users, X
+  Plane, Send, ShieldCheck, Users, X, HelpCircle
 } from 'lucide-react';
 
 import logo from './assets/jn-logo.jpeg';
@@ -27,6 +27,8 @@ import {
 } from './policies.jsx';
 import { LiveTrackingWebPage } from './track.jsx';
 import { EnquiryForm, ApplicationForm } from './enquiry.jsx';
+import { SEO } from './seo.jsx';
+import { VERIFIED_SERVICES, ALL_VERIFIED_SERVICES } from './serviceData.js';
 import './styles.css';
 
 const phone = '9677796891';
@@ -40,84 +42,9 @@ const POSITIONS = [
   'Software Developer Intern'
 ];
 
-// The 7 verified services in the exact order and naming as the MWAY mobile app
-export const CAROUSEL_SERVICES = [
-  {
-    id: 'travels',
-    title: 'Travels',
-    image: travelsImg,
-    icon: Plane,
-    iconBg: '#E0F2FE',
-    iconColor: '#0284C7',
-    tagline: 'Outstation Rides, Packages & Coach Bookings',
-    desc: 'Pickup & drop, savari-based travel, tourist packages, airport transfers and bus booking.'
-  },
-  {
-    id: 'admission',
-    title: 'Admission',
-    image: admissionImg,
-    icon: GraduationCap,
-    iconBg: '#DCFCE7',
-    iconColor: '#059669',
-    tagline: 'College Guidance & University Admissions',
-    desc: 'Tamil Nadu engineering, arts & science, medical, and abroad university admission guidance.'
-  },
-  {
-    id: 'land-property',
-    aliases: ['real-estate'],
-    title: 'Land & Property',
-    image: realestateImg,
-    icon: Building2,
-    iconBg: '#FEF3C7',
-    iconColor: '#D97706',
-    tagline: 'Verified Plots, Villas & Commercial Properties',
-    desc: 'Land, commercial property, residential plots, rentals, buying and selling assistance.'
-  },
-  {
-    id: 'jobs',
-    aliases: ['foreign-jobs'],
-    title: 'Jobs',
-    image: jobsImg,
-    icon: BriefcaseBusiness,
-    iconBg: '#FCE7F3',
-    iconColor: '#DB2777',
-    tagline: 'Overseas Employment & Career Opportunities',
-    desc: 'Guidance, documentation and verification support for overseas job opportunities.'
-  },
-  {
-    id: 'cars',
-    aliases: ['automobile'],
-    title: 'Cars',
-    image: autoImg,
-    icon: CarFront,
-    iconBg: '#EFF6FF',
-    iconColor: '#0866F5',
-    tagline: 'Certified Pre-Owned & Vehicle Coordination',
-    desc: 'Used car search, buyer guidance, vehicle inspection and seller coordination.'
-  },
-  {
-    id: 'banking',
-    title: 'Banking',
-    image: bankingImg,
-    icon: Landmark,
-    iconBg: '#E0E7FF',
-    iconColor: '#4F46E5',
-    tagline: 'DSA Facilitation, Loans & Financial Guidance',
-    desc: 'Personal & business loans, credit cards, DSA facilitation and complete financial support.'
-  },
-  {
-    id: 'it-solutions',
-    title: 'IT Software & Solutions',
-    image: itsolutionsImg,
-    icon: Laptop,
-    iconBg: '#EDE9FE',
-    iconColor: '#7C3AED',
-    tagline: 'Custom Web, Mobile Apps & Enterprise Systems',
-    desc: 'Modern web platforms, native mobile apps, cloud security, dashboards and custom software.'
-  }
-];
-
-export const ALL_SERVICES = [...CAROUSEL_SERVICES];
+// The 7 verified services with rich vertical data
+export const CAROUSEL_SERVICES = VERIFIED_SERVICES;
+export const ALL_SERVICES = ALL_VERIFIED_SERVICES;
 
 const benefits = [
   {
@@ -195,7 +122,7 @@ function Header() {
     <header className={`header ${scrolled ? 'scrolled' : ''}`}>
       <div className="wrap nav">
         <Link to="/" className="brand" onClick={handleHomeClick}>
-          <img src={logo} alt="JN Consultancy Services Logo" />
+          <img src={logo} alt="JN Consultancy Services Logo" width={40} height={40} />
           <div className="brandText">
             <b>JN</b>
             <small>CONSULTANCY SERVICES</small>
@@ -276,7 +203,15 @@ function Hero() {
         {/* Left Column */}
         <div className="heroCopy">
           <div className="heroMwayLogoWrap">
-            <img src={mwayLogo} alt="MWAY App Logo" className="heroMwayLogo" />
+            <img
+              src={mwayLogo}
+              alt="MWAY App - Mobility and Multi-Service Platform by JN Consultancy"
+              className="heroMwayLogo"
+              width={190}
+              height={162}
+              fetchPriority="high"
+              decoding="async"
+            />
             <div className="heroLogoGlow" />
           </div>
 
@@ -287,7 +222,7 @@ function Hero() {
           </h1>
           <p>
             JN Consultancy Services provides trusted, professional and complete
-            solutions for individuals, families and businesses.
+            solutions for individuals, families and businesses in Perambalur and across Tamil Nadu.
           </p>
 
           <div className="heroActions">
@@ -470,8 +405,11 @@ function ServiceCarousel() {
                   <div className="cardImageWrapper">
                     <img
                       src={item.image}
-                      alt={`${item.title} illustration`}
-                      loading={idx < 3 ? 'eager' : 'lazy'}
+                      alt={`${item.title} Services in Perambalur - JN Consultancy`}
+                      width={896}
+                      height={1200}
+                      loading={idx === 0 ? 'eager' : 'lazy'}
+                      decoding="async"
                     />
                     <div className="cardGlassOverlay">
                       <div className="cardBadge">
@@ -613,9 +551,17 @@ function ServiceCard({ s }) {
 /**
  * Main Home Page
  */
+/**
+ * Main Home Page
+ */
 function Home() {
   return (
     <>
+      <SEO
+        title="JN Consultancy Services | Travels, Admissions, Property, Jobs, Banking & IT in Perambalur"
+        description="JN Consultancy Services in Perambalur offers trusted outstation travels, college admission guidance, verified land & property, overseas jobs, pre-owned cars, banking loans, and IT solutions."
+        canonical="https://www.mwayjnconsultancy.in/"
+      />
       <Hero />
       <ServiceCarousel />
       <WhyChooseUs />
@@ -627,7 +573,7 @@ function Home() {
             <div className="bannerText">
               <div className="bannerEyebrow">READY WHEN YOU ARE</div>
               <h2>Let's find the right solution for you.</h2>
-              <p>Tell us what you need and our professional team will guide you promptly.</p>
+              <p>Tell us what you need and our professional team in Perambalur will guide you promptly.</p>
             </div>
             <Link className="btn-banner-cta" to="/contact">
               Start an Enquiry <ArrowRight size={17} />
@@ -655,12 +601,42 @@ function PageHero({ eyebrow, title, text }) {
 }
 
 function ServicesPage() {
+  const servicesSchema = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.mwayjnconsultancy.in/' },
+          { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://www.mwayjnconsultancy.in/services' }
+        ]
+      },
+      {
+        '@type': 'ItemList',
+        name: 'JN Consultancy Services Verticals',
+        description: 'Verified professional service categories offered by JN Consultancy Services in Perambalur.',
+        itemListElement: ALL_SERVICES.map((s, idx) => ({
+          '@type': 'ListItem',
+          position: idx + 1,
+          name: s.title,
+          url: `https://www.mwayjnconsultancy.in/services/${s.id}`
+        }))
+      }
+    ]
+  };
+
   return (
     <>
+      <SEO
+        title="Our Services | Complete Life & Business Solutions - JN Consultancy Services"
+        description="Explore all verified services by JN Consultancy Services in Perambalur: Travels, Admission guidance, Land & Property, Overseas Jobs, Pre-Owned Cars, Banking loans, and IT solutions."
+        canonical="https://www.mwayjnconsultancy.in/services"
+        schema={servicesSchema}
+      />
       <PageHero
         eyebrow="OUR SERVICES"
         title={<>Solutions for <em>real-world needs.</em></>}
-        text="Explore all JN Consultancy Services verticals and select the tailored assistance you need."
+        text="Explore all JN Consultancy Services verticals and select the tailored assistance you need in Perambalur and across Tamil Nadu."
       />
       <section className="section wrap">
         <div className="servicesCatalogGrid">
@@ -679,15 +655,78 @@ function Detail() {
 
   if (!s) {
     return (
-      <PageHero
-        eyebrow="404"
-        title={<>Service <em>not found.</em></>}
-        text="Please select one of our verified services."
-      />
+      <>
+        <SEO
+          title="Service Not Found | JN Consultancy Services"
+          description="The requested service was not found on JN Consultancy Services."
+          noindex={true}
+        />
+        <PageHero
+          eyebrow="404"
+          title={<>Service <em>not found.</em></>}
+          text="Please select one of our verified services."
+        />
+      </>
     );
   }
 
+  // Enforce single canonical URL if accessed via an alias route
+  if (s.id !== id) {
+    return <Navigate to={`/services/${s.id}`} replace />;
+  }
+
   const Icon = s.icon;
+  const canonicalUrl = `https://www.mwayjnconsultancy.in/services/${s.id}`;
+
+  const detailSchema = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.mwayjnconsultancy.in/' },
+          { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://www.mwayjnconsultancy.in/services' },
+          { '@type': 'ListItem', position: 3, name: s.title, item: canonicalUrl }
+        ]
+      },
+      {
+        '@type': 'Service',
+        name: `${s.title} Services`,
+        serviceType: s.tagline,
+        description: s.shortDesc || s.desc,
+        provider: {
+          '@type': 'ProfessionalService',
+          name: 'JN Consultancy Services',
+          url: 'https://www.mwayjnconsultancy.in/',
+          telephone: `+91-${phone}`,
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: 'Shop No-9, C-Block, 5Star Complex, Opposite New Bus Stand',
+            addressLocality: 'Perambalur',
+            addressRegion: 'Tamil Nadu',
+            postalCode: '621212',
+            addressCountry: 'IN'
+          }
+        },
+        areaServed: [
+          { '@type': 'AdministrativeArea', name: 'Perambalur' },
+          { '@type': 'AdministrativeArea', name: 'Tamil Nadu' }
+        ]
+      },
+      {
+        '@type': 'FAQPage',
+        mainEntity: (s.faqs || []).map((f) => ({
+          '@type': 'Question',
+          name: f.q,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: f.a
+          }
+        }))
+      }
+    ]
+  };
+
   const points = [
     'Professional requirement assessment and guidance',
     'Requirement-based personalized support',
@@ -699,17 +738,41 @@ function Detail() {
 
   return (
     <>
-      <PageHero
-        eyebrow={s.title.toUpperCase()}
-        title={<>{s.title} <em>made simpler.</em></>}
-        text={s.desc}
+      <SEO
+        title={s.metaTitle || `${s.title} Services in Perambalur | JN Consultancy`}
+        description={s.metaDescription || s.shortDesc || s.desc}
+        canonical={canonicalUrl}
+        schema={detailSchema}
       />
+      <section className="pageHero">
+        <div className="wrap">
+          <nav className="breadcrumbNav" aria-label="Breadcrumb">
+            <Link to="/">Home</Link>
+            <span className="sep">/</span>
+            <Link to="/services">Services</Link>
+            <span className="sep">/</span>
+            <span className="current" aria-current="page">{s.title}</span>
+          </nav>
+          <div className="pageHeroEyebrow">{s.title.toUpperCase()}</div>
+          <h1>{s.h1Title || `${s.title} made simpler.`}</h1>
+          <p className="pageHeroText">{s.tagline || s.desc}</p>
+        </div>
+      </section>
+
       <section className="section wrap">
         <div className="detailLayout">
           <div className="detailMain">
             {s.image && (
               <div className="detailCoverImage">
-                <img src={s.image} alt={s.title} />
+                <img
+                  src={s.image}
+                  alt={`${s.title} Services in Perambalur - JN Consultancy Services`}
+                  width={896}
+                  height={1200}
+                  loading="eager"
+                  fetchPriority="high"
+                  decoding="async"
+                />
               </div>
             )}
             <div className="detailHeadingGroup">
@@ -717,18 +780,63 @@ function Detail() {
                 <Icon size={28} />
               </div>
               <div>
-                <h2>Comprehensive {s.title} Support</h2>
+                <h2>Comprehensive {s.title} Support in Perambalur</h2>
                 <p>{s.tagline || s.desc}</p>
               </div>
             </div>
 
             <div className="detailBodyText">
               <p>
-                Our experienced team understands your specific requirements, guides you through every step,
-                and manages all documentation and coordination smoothly.
+                {s.leadText || 'Our experienced team understands your specific requirements, guides you through every step, and manages all documentation and coordination smoothly.'}
               </p>
             </div>
 
+            {/* Local Hub Box */}
+            <div className="localPresenceBox">
+              <MapPin size={22} />
+              <div>
+                <b>Local Service Hub in Perambalur</b>
+                <p>
+                  Available at our registered office: {office} Serving clients across Perambalur, Ariyalur, Trichy, and Tamil Nadu.
+                </p>
+              </div>
+            </div>
+
+            {/* Deliverables Grid */}
+            {s.offerings && s.offerings.length > 0 && (
+              <>
+                <h3 className="detailSectionTitle">Key Offerings &amp; Deliverables</h3>
+                <div className="serviceOfferingsGrid">
+                  {s.offerings.map((off) => (
+                    <div key={off.title} className="offeringCard">
+                      <h3>{off.title}</h3>
+                      <p>{off.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+
+            {/* Workflow Process */}
+            {s.process && s.process.length > 0 && (
+              <>
+                <h3 className="detailSectionTitle">How Our Process Works</h3>
+                <div className="workflowSteps">
+                  {s.process.map((step) => (
+                    <div key={step.step} className="workflowStepCard">
+                      <div className="stepNum">{step.step}</div>
+                      <div>
+                        <h4>{step.title}</h4>
+                        <p>{step.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+
+            {/* Checklist Commitments */}
+            <h3 className="detailSectionTitle">Our Service Commitments</h3>
             <div className="detailPoints">
               {points.map((x) => (
                 <div key={x} className="pointItem">
@@ -737,6 +845,21 @@ function Detail() {
                 </div>
               ))}
             </div>
+
+            {/* FAQs */}
+            {s.faqs && s.faqs.length > 0 && (
+              <>
+                <h3 className="detailSectionTitle">Frequently Asked Questions</h3>
+                <div className="serviceFaqList">
+                  {s.faqs.map((faq) => (
+                    <div key={faq.q} className="serviceFaqItem">
+                      <h3>{faq.q}</h3>
+                      <p>{faq.a}</p>
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
 
             <div className="detailActionArea">
               <Link className="btn-hero-primary" to="/contact">
@@ -747,10 +870,13 @@ function Detail() {
 
           <aside className="detailAside">
             <h3>Need Assistance?</h3>
-            <p>Speak directly with our service specialists for complete guidance.</p>
+            <p>Speak directly with our service specialists in Perambalur for complete guidance.</p>
             <div className="asideContactList">
               <a href={`tel:${phone}`}>
                 <Phone size={16} /> {phone}
+              </a>
+              <a href={`tel:${altPhone}`}>
+                <Phone size={16} /> {altPhone}
               </a>
               <a href={`mailto:${email}`}>
                 <Mail size={16} /> {email}
@@ -767,11 +893,26 @@ function Detail() {
 }
 
 function Careers() {
+  const careersSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.mwayjnconsultancy.in/' },
+      { '@type': 'ListItem', position: 2, name: 'Careers', item: 'https://www.mwayjnconsultancy.in/careers' }
+    ]
+  };
+
   return (
     <>
+      <SEO
+        title="Careers at JN Consultancy Services | Job Openings in Perambalur"
+        description="Join JN Consultancy Services in Perambalur. Current job openings for Telecalling Executives, Social Media Influencers, and Software Developer Interns. Apply online today."
+        canonical="https://www.mwayjnconsultancy.in/careers"
+        schema={careersSchema}
+      />
       <PageHero
         eyebrow="JOIN OUR TEAM"
-        title={<>Build your career with <em>JN.</em></>}
+        title={<>Build your career with <em>JN in Perambalur.</em></>}
         text="We are looking for motivated candidates across telecalling, social media engagement, and modern software development."
       />
       <section className="section wrap formGrid">
@@ -802,12 +943,27 @@ function Careers() {
 }
 
 function Contact() {
+  const contactSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.mwayjnconsultancy.in/' },
+      { '@type': 'ListItem', position: 2, name: 'Contact', item: 'https://www.mwayjnconsultancy.in/contact' }
+    ]
+  };
+
   return (
     <>
+      <SEO
+        title="Contact JN Consultancy Services | Office Location & Phone in Perambalur"
+        description="Get in touch with JN Consultancy Services. Office: Shop No-9, C-Block, 5Star Complex, Opposite New Bus Stand, Perambalur. Call +91 96777 96891 or email jnconsultancy26@gmail.com."
+        canonical="https://www.mwayjnconsultancy.in/contact"
+        schema={contactSchema}
+      />
       <PageHero
         eyebrow="CONTACT US"
         title={<>Let's talk about <em>what you need.</em></>}
-        text="Send an online enquiry or connect directly with our support team."
+        text="Visit our office in Perambalur, send an online enquiry, or connect directly with our support team."
       />
       <section className="section wrap contactGrid">
         <div className="contactCards">
@@ -852,13 +1008,13 @@ function Footer() {
       <div className="wrap footerGrid">
         <div className="footerAbout">
           <div className="footerBrandHeader">
-            <img src={logo} className="footlogo" alt="JN Consultancy Services" />
+            <img src={logo} className="footlogo" alt="JN Consultancy Services Logo" width={44} height={44} loading="lazy" decoding="async" />
             <div>
               <b>JN</b>
               <small>CONSULTANCY SERVICES</small>
             </div>
           </div>
-          <p>One trusted destination for multiple life and business solutions.</p>
+          <p>One trusted destination for multiple life and business solutions in Perambalur.</p>
           <div className="footMway">
             <MwayLogo size={52} />
             <div>
@@ -905,7 +1061,7 @@ function Footer() {
         <Link to="/refund-cancellation-policy">Refund & Cancellation</Link>
         <Link to="/driver-terms">Driver Partner Terms</Link>
         <Link to="/driver-privacy">Driver Privacy Policy</Link>
-        <Link to="/contact-us">Contact Us</Link>
+        <Link to="/contact">Contact Us</Link>
         <Link to="/account-deletion">Account Deletion</Link>
         <Link to="/mway-app">MWAY App Info</Link>
       </div>
@@ -968,47 +1124,61 @@ function App() {
       <Header />
       <main>
         <Routes>
+          {/* Primary Canonical Pages */}
           <Route path="/" element={<Home />} />
           <Route path="/services" element={<ServicesPage />} />
           <Route path="/services/:id" element={<Detail />} />
           <Route path="/careers" element={<Careers />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/mway-app" element={<MwayAppPage />} />
-          {/* Canonical and Alias Legal Routes */}
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
-          <Route path="/terms" element={<TermsAndConditions />} />
-          <Route path="/terms-of-service" element={<TermsAndConditions />} />
-          <Route path="/terms-conditions" element={<TermsAndConditions />} />
           <Route path="/refund-cancellation-policy" element={<RefundCancellationPolicy />} />
-          <Route path="/refund-policy" element={<RefundCancellationPolicy />} />
-          <Route path="/refund" element={<RefundCancellationPolicy />} />
-          <Route path="/cancellation-policy" element={<RefundCancellationPolicy />} />
-          <Route path="/refund%20cancellation%20policy" element={<RefundCancellationPolicy />} />
-          <Route path="/refund cancellation policy" element={<RefundCancellationPolicy />} />
-          <Route path="/terms%20and%20conditions" element={<TermsAndConditions />} />
-          <Route path="/terms and conditions" element={<TermsAndConditions />} />
-          <Route path="/contact-us" element={<ContactUsPage />} />
-          <Route path="/account-deletion" element={<AccountDeletion />} />
-          {/* Driver Partner Legal Routes */}
           <Route path="/driver-terms" element={<DriverTermsPolicy />} />
-          <Route path="/driver-terms-and-conditions" element={<DriverTermsPolicy />} />
           <Route path="/driver-privacy" element={<DriverPrivacyPolicy />} />
-          <Route path="/driver-privacy-policy" element={<DriverPrivacyPolicy />} />
-          <Route path="/driver-refund-policy" element={<RefundCancellationPolicy />} />
-          <Route path="/driver-cancellation-policy" element={<RefundCancellationPolicy />} />
-          {/* Public Live Tracking */}
+          <Route path="/account-deletion" element={<AccountDeletion />} />
+
+          {/* Canonical 301 Redirects for Alias & Duplicate URLs */}
+          <Route path="/services/real-estate" element={<Navigate to="/services/land-property" replace />} />
+          <Route path="/services/foreign-jobs" element={<Navigate to="/services/jobs" replace />} />
+          <Route path="/services/automobile" element={<Navigate to="/services/cars" replace />} />
+          <Route path="/contact-us" element={<Navigate to="/contact" replace />} />
+          <Route path="/privacy" element={<Navigate to="/privacy-policy" replace />} />
+          <Route path="/terms" element={<Navigate to="/terms-and-conditions" replace />} />
+          <Route path="/terms-of-service" element={<Navigate to="/terms-and-conditions" replace />} />
+          <Route path="/terms-conditions" element={<Navigate to="/terms-and-conditions" replace />} />
+          <Route path="/terms%20and%20conditions" element={<Navigate to="/terms-and-conditions" replace />} />
+          <Route path="/terms and conditions" element={<Navigate to="/terms-and-conditions" replace />} />
+          <Route path="/refund" element={<Navigate to="/refund-cancellation-policy" replace />} />
+          <Route path="/refund-policy" element={<Navigate to="/refund-cancellation-policy" replace />} />
+          <Route path="/cancellation-policy" element={<Navigate to="/refund-cancellation-policy" replace />} />
+          <Route path="/refund%20cancellation%20policy" element={<Navigate to="/refund-cancellation-policy" replace />} />
+          <Route path="/refund cancellation policy" element={<Navigate to="/refund-cancellation-policy" replace />} />
+          <Route path="/driver-terms-and-conditions" element={<Navigate to="/driver-terms" replace />} />
+          <Route path="/driver-privacy-policy" element={<Navigate to="/driver-privacy" replace />} />
+          <Route path="/driver-refund-policy" element={<Navigate to="/refund-cancellation-policy" replace />} />
+          <Route path="/driver-cancellation-policy" element={<Navigate to="/refund-cancellation-policy" replace />} />
+
+          {/* Public Live Tracking (Transactional Utility - Noindexed) */}
           <Route path="/track" element={<LiveTrackingWebPage />} />
           <Route path="/track/:token" element={<LiveTrackingWebPage />} />
+
+          {/* 404 Error Route */}
           <Route
             path="*"
             element={
-              <PageHero
-                eyebrow="404"
-                title={<>Page <em>not found.</em></>}
-                text="The page you're looking for doesn't exist."
-              />
+              <>
+                <SEO
+                  title="Page Not Found (404) | JN Consultancy Services"
+                  description="The page you are looking for does not exist on JN Consultancy Services."
+                  noindex={true}
+                />
+                <PageHero
+                  eyebrow="404"
+                  title={<>Page <em>not found.</em></>}
+                  text="The page you're looking for doesn't exist. Please check the URL or return to our homepage."
+                />
+              </>
             }
           />
         </Routes>

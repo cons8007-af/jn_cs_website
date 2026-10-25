@@ -1,0 +1,14 @@
+# robots.txt for https://www.mwayjnconsultancy.in/
+User-agent: *
+Allow: /
+Allow: /assets/
+Allow: /favicon*.png
+Allow: /favicon.ico
+Allow: /apple-touch-icon.png
+
+# Disallow dynamic/private live trip tracking utility routes
+Disallow: /track
+Disallow: /track/
+
+# Reference to the XML Sitemap
+Sitemap: https://www.mwayjnconsultancy.in/sitemap.xml

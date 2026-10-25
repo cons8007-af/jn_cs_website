@@ -16,6 +16,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, MapPin, Phone, AlertTriangle } from 'lucide-react';
+import { SEO } from './seo.jsx';
 
 export const CONTACT = {
   phone: '9677796891',
@@ -27,9 +28,10 @@ export const CONTACT = {
 
 const UPDATED = 'This page was last reviewed on 10 October 2026.';
 
-function PolicyPage({ eyebrow, title, intro, children }) {
+function PolicyPage({ eyebrow, title, intro, seoTitle, seoDesc, canonical, children }) {
   return (
     <>
+      <SEO title={seoTitle} description={seoDesc} canonical={canonical} />
       <section className="pageHero">
         <div className="wrap">
           <div className="pageHeroEyebrow">{eyebrow}</div>
@@ -90,6 +92,9 @@ export function PrivacyPolicy() {
         </>
       }
       intro="This policy covers the JN Consultancy Services website and the MWAY mobile app."
+      seoTitle="Privacy Policy | JN Consultancy Services & MWAY App"
+      seoDesc="Read how JN Consultancy Services and MWAY mobile app collect, use, and protect your personal information in compliance with privacy standards."
+      canonical="https://www.mwayjnconsultancy.in/privacy-policy"
     >
       <h2>Who we are</h2>
       <p>
@@ -206,6 +211,9 @@ export function TermsAndConditions() {
         </>
       }
       intro="These terms apply to this website and to the MWAY mobile app."
+      seoTitle="Terms and Conditions | JN Consultancy Services"
+      seoDesc="Official terms of use and service agreement for JN Consultancy Services and the MWAY mobility platform in Perambalur."
+      canonical="https://www.mwayjnconsultancy.in/terms-and-conditions"
     >
       <h2>Agreement</h2>
       <p>
@@ -291,6 +299,9 @@ export function RefundCancellationPolicy() {
         </>
       }
       intro="How cancellations and refunds work for bookings made through MWAY."
+      seoTitle="Refund & Cancellation Policy | JN Consultancy Services"
+      seoDesc="Understand trip cancellations, booking modifications, refund calculations, and payment reversal timelines with JN Consultancy Services."
+      canonical="https://www.mwayjnconsultancy.in/refund-cancellation-policy"
     >
       <h2>Cancelling a booking</h2>
       <p>
@@ -347,6 +358,9 @@ export function ContactUsPage() {
         </>
       }
       intro="For questions about our services, the MWAY app, a booking, or a refund."
+      seoTitle="Contact Us | JN Consultancy Services Perambalur"
+      seoDesc="Get in touch with JN Consultancy Services in Perambalur. Office address: 5Star Complex, Opposite New Bus Stand. Call 9677796891."
+      canonical="https://www.mwayjnconsultancy.in/contact"
     >
       <h2>JN Consultancy Services</h2>
       <ContactBlock />
@@ -389,6 +403,9 @@ export function AccountDeletion() {
         </>
       }
       intro="How to ask for your MWAY account and associated data to be removed."
+      seoTitle="Account & Data Deletion Request | MWAY Mobile App"
+      seoDesc="Official procedure to submit an account deletion and data removal request for the MWAY mobile application by JN Consultancy Services."
+      canonical="https://www.mwayjnconsultancy.in/account-deletion"
     >
       <h2>How to request deletion</h2>
       <p>
@@ -457,6 +474,9 @@ export function DriverTermsPolicy() {
         </>
       }
       intro="These commercial partner terms govern your use of the MWAY-D driver application and transportation dispatch services provided by JN Consultancy Services."
+      seoTitle="Driver Partner Terms & Conditions | MWAY-D Platform"
+      seoDesc="Commercial partner terms, vehicle requirements, dispatch rules, and code of conduct for registered driver partners on the MWAY-D mobility network."
+      canonical="https://www.mwayjnconsultancy.in/driver-terms"
     >
       <h2>1. Independent Partner Relationship</h2>
       <p>
@@ -526,6 +546,9 @@ export function DriverPrivacyPolicy() {
         </>
       }
       intro="How JN Consultancy Services collects, uses, and safeguards partner driver information and telemetry on the MWAY-D platform."
+      seoTitle="Driver Partner Privacy Policy | MWAY-D Platform"
+      seoDesc="Learn how driver documents, vehicle records, and GPS location telemetry are collected and protected on the MWAY-D driver application."
+      canonical="https://www.mwayjnconsultancy.in/driver-privacy"
     >
       <h2>1. Information We Collect</h2>
       <p>We collect and store driver information essential for transport operations:</p>

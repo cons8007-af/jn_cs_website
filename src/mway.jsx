@@ -16,6 +16,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
 import mwayLogo from './assets/mway-logo.png';
+import { SEO } from './seo.jsx';
 
 export const MWAY_TAGLINE = 'My Way. My Growth. My Journey.';
 
@@ -109,8 +110,23 @@ export function MwaySection() {
 
 /** /mway-app — the dedicated information page. */
 export function MwayAppPage() {
+  const mwaySchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.mwayjnconsultancy.in/' },
+      { '@type': 'ListItem', position: 2, name: 'MWAY Mobile App', item: 'https://www.mwayjnconsultancy.in/mway-app' }
+    ]
+  };
+
   return (
     <>
+      <SEO
+        title="MWAY Mobile App | Travel Booking & Multiservice App by JN Consultancy"
+        description="Discover the MWAY mobile app by JN Consultancy Services. Book outstation cabs, savari rides, track trips live, and access all consultation services on your phone."
+        canonical="https://www.mwayjnconsultancy.in/mway-app"
+        schema={mwaySchema}
+      />
       <section className="pageHero mwayHero">
         <div className="wrap mwayHeroInner">
           <MwayLogo size={128} />
@@ -166,7 +182,7 @@ export function MwayAppPage() {
           <h3>Getting the app</h3>
           <p>
             MWAY is distributed directly by JN Consultancy Services.{' '}
-            <Link to="/contact-us">Contact our team</Link> and we will tell you
+            <Link to="/contact">Contact our team</Link> and we will tell you
             how to install the current version for your device.
           </p>
 
@@ -182,7 +198,7 @@ export function MwayAppPage() {
         <aside className="mwayAside">
           <div className="mwayAsideCard">
             <MwayLockup size={92} />
-            <Link className="btn primary full" to="/contact-us">
+            <Link className="btn primary full" to="/contact">
               Contact us about MWAY <ArrowRight size={16} />
             </Link>
           </div>

@@ -3,6 +3,7 @@ import { useLocation, useParams, Link } from 'react-router-dom';
 import { MapPin, Navigation, Car, Clock, ShieldCheck, AlertCircle, RefreshCw, CheckCircle, Info } from 'lucide-react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { SEO } from './seo.jsx';
 
 const API_BASE = 'https://consbackend-production.up.railway.app';
 
@@ -211,6 +212,11 @@ export function LiveTrackingWebPage() {
 
   return (
     <>
+      <SEO
+        title="Live Trip Tracking | MWAY & JN Consultancy Services"
+        description="Track your confirmed MWAY trip live with vehicle and driver details."
+        noindex={true}
+      />
       <section className="pageHero">
         <div className="wrap">
           <div className="pageHeroEyebrow">LIVE TRIP TRACKING</div>

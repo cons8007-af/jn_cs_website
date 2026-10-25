@@ -12,6 +12,9 @@ const MIME_TYPES = {
   '.js': 'text/javascript; charset=utf-8',
   '.css': 'text/css; charset=utf-8',
   '.json': 'application/json; charset=utf-8',
+  '.xml': 'application/xml; charset=utf-8',
+  '.txt': 'text/plain; charset=utf-8',
+  '.webp': 'image/webp',
   '.png': 'image/png',
   '.jpg': 'image/jpeg',
   '.jpeg': 'image/jpeg',
@@ -36,18 +39,45 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  // Resolve directory index or direct file
+  if (fs.existsSync(filePath) && fs.statSync(filePath).isDirectory()) {
+    const dirIndex = path.join(filePath, 'index.html');
+    if (fs.existsSync(dirIndex)) {
+      filePath = dirIndex;
+    }
+  }
+
   fs.stat(filePath, (err, stats) => {
     if (err || !stats.isFile()) {
-      // SPA Fallback: serve index.html for client-side routing
-      filePath = path.join(DIST_DIR, 'index.html');
+      // Check for route-specific prerendered index.html
+      const subIndex = path.join(DIST_DIR, reqPath, 'index.html');
+      if (fs.existsSync(subIndex) && fs.statSync(subIndex).isFile()) {
+        filePath = subIndex;
+      } else {
+        // Return 404 for missing static files with explicit extensions (e.g. .xml, .txt, .png, .js)
+        const reqExt = path.extname(reqPath).toLowerCase();
+        if (reqExt && reqExt !== '.html') {
+          res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
+          res.end('404 Not Found');
+          return;
+        }
+        // SPA Fallback: serve index.html for client-side routing
+        filePath = path.join(DIST_DIR, 'index.html');
+      }
     }
 
     const ext = path.extname(filePath).toLowerCase();
     const contentType = MIME_TYPES[ext] || 'application/octet-stream';
     const isAsset = filePath.includes(path.join(DIST_DIR, 'assets'));
+    const isSitemapOrRobots = reqPath === '/sitemap.xml' || reqPath === '/robots.txt';
+
     const headers = {
       'Content-Type': contentType,
-      'Cache-Control': isAsset ? 'public, max-age=31536000, immutable' : 'no-cache'
+      'Cache-Control': isAsset
+        ? 'public, max-age=31536000, immutable'
+        : isSitemapOrRobots
+        ? 'public, max-age=86400, must-revalidate'
+        : 'no-cache'
     };
 
     fs.readFile(filePath, (readErr, content) => {

@@ -2317,3 +2317,193 @@ img {
     grid-template-columns: 1fr;
   }
 }
+
+/* ==========================================================================
+   Service Detail Rich Enhancements & SEO Content
+   ========================================================================== */
+
+.breadcrumbNav {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--slate-muted);
+  margin-bottom: 20px;
+}
+
+.breadcrumbNav a {
+  color: var(--primary-blue);
+  font-weight: 500;
+  transition: var(--transition-smooth);
+}
+
+.breadcrumbNav a:hover {
+  text-decoration: underline;
+}
+
+.breadcrumbNav .sep {
+  color: var(--slate-light);
+  font-size: 11px;
+}
+
+.breadcrumbNav .current {
+  color: var(--slate-dark);
+  font-weight: 600;
+}
+
+.detailSectionTitle {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--deep-navy);
+  margin: 36px 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.serviceOfferingsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.offeringCard {
+  background: #F8FAFD;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  transition: var(--transition-smooth);
+}
+
+.offeringCard:hover {
+  border-color: rgba(8, 102, 245, 0.3);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-2px);
+}
+
+.offeringCard h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--deep-navy);
+  margin-bottom: 6px;
+}
+
+.offeringCard p {
+  font-size: 13.5px;
+  color: var(--slate-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.workflowSteps {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.workflowStepCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: var(--white);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 16px;
+}
+
+.stepNum {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--primary-blue-light);
+  color: var(--primary-blue);
+  font-weight: 800;
+  font-size: 14px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.workflowStepCard h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--deep-navy);
+  margin-bottom: 4px;
+}
+
+.workflowStepCard p {
+  font-size: 13px;
+  color: var(--slate-muted);
+  line-height: 1.45;
+  margin: 0;
+}
+
+.serviceFaqList {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 36px;
+}
+
+.serviceFaqItem {
+  background: #F8FAFD;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+}
+
+.serviceFaqItem h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--deep-navy);
+  margin-bottom: 8px;
+}
+
+.serviceFaqItem p {
+  font-size: 14px;
+  color: var(--slate-body);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.localPresenceBox {
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  margin: 28px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.localPresenceBox svg {
+  color: var(--primary-blue);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.localPresenceBox b {
+  display: block;
+  font-size: 15px;
+  color: var(--deep-navy);
+  margin-bottom: 4px;
+}
+
+.localPresenceBox p {
+  font-size: 13.5px;
+  color: var(--slate-body);
+  margin: 0;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .serviceOfferingsGrid,
+  .workflowSteps {
+    grid-template-columns: 1fr;
+  }
+}
+
