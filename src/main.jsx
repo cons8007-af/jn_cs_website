@@ -29,7 +29,9 @@ import { LiveTrackingWebPage } from './track.jsx';
 import { EnquiryForm, ApplicationForm } from './enquiry.jsx';
 import { SEO } from './seo.jsx';
 import { VERIFIED_SERVICES, ALL_VERIFIED_SERVICES } from './serviceData.js';
+import BankingServicesPage from './pages/BankingServicesPage.jsx';
 import './styles.css';
+import './styles/banking.css';
 
 const phone = '9677796891';
 const altPhone = '8695556550';
@@ -736,6 +738,20 @@ function Detail() {
     'Post-service follow-up and verification'
   ];
 
+  if (s.id === 'banking') {
+    return (
+      <>
+        <SEO
+          title={s.metaTitle || 'Banking DSA Loans, Credit Cards & Financial Assistance | JN Consultancy Perambalur'}
+          description={s.metaDescription || 'All your financial needs in one place. Explore 16 loan options, cards, insurance, investments and calculate instant loan EMIs with MWAY / JN Consultancy Services.'}
+          canonical={canonicalUrl}
+          schema={detailSchema}
+        />
+        <BankingServicesPage />
+      </>
+    );
+  }
+
   return (
     <>
       <SEO
@@ -1139,6 +1155,8 @@ function App() {
           <Route path="/account-deletion" element={<AccountDeletion />} />
 
           {/* Canonical 301 Redirects for Alias & Duplicate URLs */}
+          <Route path="/banking" element={<Navigate to="/services/banking" replace />} />
+          <Route path="/loan-calculator" element={<Navigate to="/services/banking" replace />} />
           <Route path="/services/real-estate" element={<Navigate to="/services/land-property" replace />} />
           <Route path="/services/foreign-jobs" element={<Navigate to="/services/jobs" replace />} />
           <Route path="/services/automobile" element={<Navigate to="/services/cars" replace />} />
