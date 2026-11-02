@@ -21,8 +21,8 @@ export const VERIFIED_SERVICES = [
     iconColor: '#0284C7',
     tagline: 'Outstation Rides, Packages & Coach Bookings',
     shortDesc: 'Pickup & drop, savari-based travel, tourist packages, airport transfers and bus booking.',
-    metaTitle: 'Outstation Cabs, Airport Transfers & Travel Packages | JN Travels Perambalur',
-    metaDescription: 'Book reliable outstation cabs, round-trips, airport transfers to Trichy & Chennai, savari-based rides, and holiday tour packages in Perambalur with JN Travels & MWAY App.',
+    metaTitle: 'Outstation Cabs, Airport Transfers & Travel Packages | MWAY Travels',
+    metaDescription: 'Book reliable outstation cabs, round-trips, airport transfers to Trichy & Chennai, savari-based rides, and holiday tour packages in Perambalur with MWAY Travels & MWAY App.',
     leadText: 'JN Travels offers comfortable, punctual, and safe passenger transport solutions for individuals, families, and corporate groups. Based in Perambalur, we connect travellers seamlessly to Chennai, Tiruchirappalli, Coimbatore, Bangalore, and pilgrimage circuits across Tamil Nadu.',
     offerings: [
       {
@@ -81,8 +81,8 @@ export const VERIFIED_SERVICES = [
     iconColor: '#059669',
     tagline: 'College Guidance & University Admissions',
     shortDesc: 'Tamil Nadu engineering, arts & science, medical, and abroad university admission guidance.',
-    metaTitle: 'College Guidance & University Admission Counselling | JN Consultancy Perambalur',
-    metaDescription: 'Expert admission guidance in Perambalur for Engineering (TNEA), Arts & Science, Medical (NEET), MBA/MCA, and Abroad Universities. Transparent, merit-focused career counselling.',
+    metaTitle: 'College Guidance & University Admission Counselling | MWAY Education',
+    metaDescription: 'Expert admission guidance in Perambalur for Engineering (TNEA), Arts & Science, Medical (NEET), MBA/MCA, and Abroad Universities with MWAY Education.',
     leadText: 'Making the right higher education choice is a crucial milestone for every student. JN Consultancy provides ethical, transparent, and merit-focused educational counselling in Perambalur to help students and parents navigate college options, cut-off ranks, and official admission procedures.',
     offerings: [
       {
@@ -142,8 +142,8 @@ export const VERIFIED_SERVICES = [
     iconColor: '#D97706',
     tagline: 'Verified Plots, Villas & Commercial Properties',
     shortDesc: 'Land, commercial property, residential plots, rentals, buying and selling assistance.',
-    metaTitle: 'Verified Plots, Real Estate & Commercial Property in Perambalur | JN Consultancy',
-    metaDescription: 'Find DTCP & RERA approved residential plots, agricultural land, commercial property, and rental spaces in Perambalur and nearby districts. Verified documents and honest pricing.',
+    metaTitle: 'Verified Plots, Real Estate & Commercial Property | MWAY Properties',
+    metaDescription: 'Find DTCP & RERA approved residential plots, agricultural land, commercial property, and rental spaces in Perambalur and nearby districts with MWAY Properties. Verified documents and honest pricing.',
     leadText: 'Real estate investment requires thorough legal scrutiny and market knowledge. JN Consultancy Services connects property buyers, sellers, and tenants with verified residential plots, commercial buildings, and agricultural lands in Perambalur, ensuring complete transparency and legal security.',
     offerings: [
       {
@@ -203,8 +203,8 @@ export const VERIFIED_SERVICES = [
     iconColor: '#DB2777',
     tagline: 'Overseas Employment & Career Opportunities',
     shortDesc: 'Guidance, documentation and verification support for overseas job opportunities.',
-    metaTitle: 'Overseas Jobs & Career Guidance Services | JN Consultancy Perambalur',
-    metaDescription: 'Genuine overseas job guidance, CV documentation, and career opportunities for Gulf countries, Southeast Asia, and Europe in Perambalur. Transparent verification support.',
+    metaTitle: 'Overseas Jobs & Career Guidance Services | MWAY Jobs',
+    metaDescription: 'Genuine overseas job guidance, CV documentation, and career opportunities for Gulf countries, Southeast Asia, and Europe with MWAY Jobs. Transparent verification support.',
     leadText: 'Securing an international career requires authentic information, correct documentation, and verified employer communication. JN Consultancy Services in Perambalur assists job seekers with professional profile preparation, visa documentation guidance, and genuine career guidance across international markets.',
     offerings: [
       {
@@ -264,8 +264,8 @@ export const VERIFIED_SERVICES = [
     iconColor: '#0866F5',
     tagline: 'Certified Pre-Owned & Vehicle Coordination',
     shortDesc: 'Used car search, buyer guidance, vehicle inspection and seller coordination.',
-    metaTitle: 'Certified Pre-Owned Cars & Vehicle Buying Guidance | JN Automobiles Perambalur',
-    metaDescription: 'Buy and sell inspected pre-owned cars in Perambalur. Multi-point vehicle evaluation, fair market pricing, RC transfer, and complete ownership transfer documentation.',
+    metaTitle: 'Certified Pre-Owned Cars & Vehicle Buying Guidance | MWAY Cars',
+    metaDescription: 'Buy and sell inspected pre-owned cars in Perambalur with MWAY Cars. Multi-point vehicle evaluation, fair market pricing, RC transfer, and complete ownership transfer documentation.',
     leadText: 'Purchasing a pre-owned vehicle should give you confidence, not surprises. JN Consultancy Services helps buyers and sellers in Perambalur with thorough vehicle inspections, fair market valuations, and complete RTO paperwork coordination for seamless ownership transfers.',
     offerings: [
       {
@@ -324,8 +324,8 @@ export const VERIFIED_SERVICES = [
     iconColor: '#4F46E5',
     tagline: 'DSA Facilitation, Loans & Financial Guidance',
     shortDesc: 'Personal & business loans, credit cards, DSA facilitation and complete financial support.',
-    metaTitle: 'Banking DSA Loans, Credit Cards & Financial Assistance | JN Consultancy Perambalur',
-    metaDescription: 'Direct Selling Agent (DSA) loan facilitation in Perambalur: Personal loans, business loans, home loans, mortgage loans, and credit cards with competitive bank interest rates.',
+    metaTitle: 'Banking DSA Loans, Credit Cards & Financial Assistance | MWAY Banking',
+    metaDescription: 'Direct Selling Agent (DSA) loan facilitation in Perambalur: Personal loans, business loans, home loans, mortgage loans, and credit cards with competitive bank interest rates via MWAY Banking.',
     leadText: 'Securing the right credit facility at competitive interest rates can be tedious. As an authorized Direct Selling Agent (DSA) facilitator in Perambalur, JN Consultancy simplifies the loan application process for salaried employees, business proprietors, and farmers across leading banks and NBFCs.',
     offerings: [
       {
@@ -384,8 +384,8 @@ export const VERIFIED_SERVICES = [
     iconColor: '#7C3AED',
     tagline: 'Custom Web, Mobile Apps & Enterprise Systems',
     shortDesc: 'Modern web platforms, native mobile apps, cloud security, dashboards and custom software.',
-    metaTitle: 'Custom Web Design, Mobile App Development & IT Solutions | JN Consultancy Perambalur',
-    metaDescription: 'Full-stack web development, custom software, native Android/iOS mobile apps, cloud hosting, and enterprise IT solutions for businesses in Perambalur and Tamil Nadu.',
+    metaTitle: 'Custom Web Design, Mobile App Development & IT Solutions | MWAY IT Solutions',
+    metaDescription: 'Full-stack web development, custom software, native Android/iOS mobile apps, cloud hosting, and enterprise IT solutions with MWAY IT Solutions.',
     leadText: 'In a digital-first economy, robust software and an engaging online presence are essential. JN Consultancy Services delivers modern full-stack web platforms, mobile applications (like the MWAY travel ecosystem), custom business dashboards, and cloud solutions built for performance, security, and scalability.',
     offerings: [
       {

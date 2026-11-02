@@ -1,4 +1,4 @@
-# robots.txt for https://www.mwayjnconsultancy.in/
+# robots.txt for https://mway.in/
 User-agent: *
 Allow: /
 Allow: /assets/
@@ -11,4 +11,4 @@ Disallow: /track
 Disallow: /track/
 
 # Reference to the XML Sitemap
-Sitemap: https://www.mwayjnconsultancy.in/sitemap.xml
+Sitemap: https://mway.in/sitemap.xml

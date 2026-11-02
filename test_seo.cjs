@@ -23,6 +23,28 @@ const MIME_TYPES = {
 };
 
 const server = http.createServer((req, res) => {
+  const host = (req.headers.host || '').toLowerCase().split(':')[0];
+  const proto = req.headers['x-forwarded-proto'];
+
+  // 301 Permanent Redirects:
+  if (host.includes('mwayjnconsultancy') || host === 'www.mway.in') {
+    res.writeHead(301, {
+      'Location': `https://mway.in${req.url}`,
+      'Connection': 'close'
+    });
+    res.end();
+    return;
+  }
+
+  if (proto === 'http' && host === 'mway.in') {
+    res.writeHead(301, {
+      'Location': `https://mway.in${req.url}`,
+      'Connection': 'close'
+    });
+    res.end();
+    return;
+  }
+
   let reqPath = req.url.split('?')[0];
   if (reqPath === '/') reqPath = '/index.html';
   let filePath = path.join(DIST_DIR, reqPath);
@@ -76,7 +98,7 @@ const server = http.createServer((req, res) => {
 
 server.listen(3456, '127.0.0.1', async () => {
   const tests = [
-    { url: '/', expectStatus: 200, expectType: 'text/html', check: 'JN Consultancy Services' },
+    { url: '/', expectStatus: 200, expectType: 'text/html', check: 'MWAY' },
     { url: '/services', expectStatus: 200, expectType: 'text/html', check: 'Our Services' },
     { url: '/services/travels', expectStatus: 200, expectType: 'text/html', check: 'Outstation Cabs' },
     { url: '/services/admission', expectStatus: 200, expectType: 'text/html', check: 'College Guidance' },
@@ -85,40 +107,82 @@ server.listen(3456, '127.0.0.1', async () => {
     { url: '/services/cars', expectStatus: 200, expectType: 'text/html', check: 'Certified Pre-Owned Cars' },
     { url: '/services/banking', expectStatus: 200, expectType: 'text/html', check: 'Banking DSA Loans' },
     { url: '/services/it-solutions', expectStatus: 200, expectType: 'text/html', check: 'Custom Web Design' },
-    { url: '/careers', expectStatus: 200, expectType: 'text/html', check: 'Careers at JN Consultancy' },
-    { url: '/contact', expectStatus: 200, expectType: 'text/html', check: 'Contact JN Consultancy' },
+    { url: '/careers', expectStatus: 200, expectType: 'text/html', check: 'Careers at MWAY' },
+    { url: '/contact', expectStatus: 200, expectType: 'text/html', check: 'Contact MWAY' },
     { url: '/mway-app', expectStatus: 200, expectType: 'text/html', check: 'MWAY Mobile App' },
     { url: '/privacy-policy', expectStatus: 200, expectType: 'text/html', check: 'Privacy Policy' },
     { url: '/terms-and-conditions', expectStatus: 200, expectType: 'text/html', check: 'Terms and Conditions' },
     { url: '/refund-cancellation-policy', expectStatus: 200, expectType: 'text/html', check: 'Refund & Cancellation Policy' },
-    { url: '/sitemap.xml', expectStatus: 200, expectType: 'application/xml', check: 'https://www.mwayjnconsultancy.in/services/travels' },
-    { url: '/robots.txt', expectStatus: 200, expectType: 'text/plain', check: 'Sitemap:' },
-    { url: '/nonexistent.xml', expectStatus: 404, expectType: 'text/plain', check: '404 Not Found' }
+    { url: '/sitemap.xml', expectStatus: 200, expectType: 'application/xml', check: 'https://mway.in/services/travels' },
+    { url: '/robots.txt', expectStatus: 200, expectType: 'text/plain', check: 'Sitemap: https://mway.in/sitemap.xml' },
+    { url: '/nonexistent.xml', expectStatus: 404, expectType: 'text/plain', check: '404 Not Found' },
+    // 301 Permanent Redirect tests
+    {
+      url: '/',
+      headers: { host: 'mwayjnconsultancy.in' },
+      expectStatus: 301,
+      expectLocation: 'https://mway.in/'
+    },
+    {
+      url: '/services/travels?ref=direct',
+      headers: { host: 'www.mwayjnconsultancy.in' },
+      expectStatus: 301,
+      expectLocation: 'https://mway.in/services/travels?ref=direct'
+    },
+    {
+      url: '/careers',
+      headers: { host: 'www.mway.in' },
+      expectStatus: 301,
+      expectLocation: 'https://mway.in/careers'
+    },
+    {
+      url: '/contact',
+      headers: { host: 'mway.in', 'x-forwarded-proto': 'http' },
+      expectStatus: 301,
+      expectLocation: 'https://mway.in/contact'
+    }
   ];
 
   let passed = 0;
   for (const t of tests) {
     await new Promise(resolve => {
-      http.get('http://127.0.0.1:3456' + t.url, res => {
+      const options = {
+        hostname: '127.0.0.1',
+        port: 3456,
+        path: t.url,
+        method: 'GET',
+        headers: t.headers || {}
+      };
+
+      const req = http.request(options, res => {
         let body = '';
         res.on('data', chunk => body += chunk);
         res.on('end', () => {
           const statusOk = res.statusCode === t.expectStatus;
-          const typeOk = (res.headers['content-type'] || '').includes(t.expectType);
-          const bodyOk = body.includes(t.check);
-          if (statusOk && typeOk && bodyOk) {
-            console.log('PASS: ' + t.url + ' [' + res.statusCode + ', ' + res.headers['content-type'] + ']');
+          const typeOk = !t.expectType || (res.headers['content-type'] || '').includes(t.expectType);
+          const bodyOk = !t.check || body.includes(t.check);
+          const locOk = !t.expectLocation || res.headers['location'] === t.expectLocation;
+
+          if (statusOk && typeOk && bodyOk && locOk) {
+            console.log(`PASS: ${t.url} [Status: ${res.statusCode}${t.expectLocation ? ', Location: ' + res.headers['location'] : ''}]`);
             passed++;
           } else {
-            console.error('FAIL: ' + t.url + ' [Status: ' + res.statusCode + ', Type: ' + res.headers['content-type'] + ', bodyMatch: ' + bodyOk + ']');
+            console.error(`FAIL: ${t.url} [Status: ${res.statusCode} (expected ${t.expectStatus}), Location: ${res.headers['location']} (expected ${t.expectLocation}), Type: ${res.headers['content-type']}, bodyMatch: ${bodyOk}]`);
           }
           resolve();
         });
       });
+
+      req.on('error', err => {
+        console.error('Request error: ' + err.message);
+        resolve();
+      });
+
+      req.end();
     });
   }
 
-  console.log('\nFINAL RESULT: ' + passed + ' / ' + tests.length + ' tests passed successfully.');
+  console.log(`\nFINAL RESULT: ${passed} / ${tests.length} tests passed successfully.`);
   server.close();
   process.exit(passed === tests.length ? 0 : 1);
 });

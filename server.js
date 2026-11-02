@@ -27,6 +27,32 @@ const MIME_TYPES = {
 };
 
 const server = http.createServer((req, res) => {
+  const host = (req.headers.host || '').toLowerCase().split(':')[0];
+  const proto = req.headers['x-forwarded-proto'];
+
+  // 301 Permanent Redirect:
+  // 1. Old domain (mwayjnconsultancy.in, www.mwayjnconsultancy.in) -> https://mway.in
+  // 2. www.mway.in -> https://mway.in
+  // 3. HTTP -> HTTPS on primary domain mway.in
+  // Preserves full pathname and query parameters
+  if (host.includes('mwayjnconsultancy') || host === 'www.mway.in') {
+    res.writeHead(301, {
+      'Location': `https://mway.in${req.url}`,
+      'Connection': 'close'
+    });
+    res.end();
+    return;
+  }
+
+  if (proto === 'http' && host === 'mway.in') {
+    res.writeHead(301, {
+      'Location': `https://mway.in${req.url}`,
+      'Connection': 'close'
+    });
+    res.end();
+    return;
+  }
+
   let reqPath = req.url.split('?')[0];
   if (reqPath === '/') reqPath = '/index.html';
 
@@ -93,5 +119,5 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(PORT, '0.0.0.0', () => {
-  console.log(`JN Consultancy Website listening on port ${PORT}`);
+  console.log(`MWAY Website listening on port ${PORT}`);
 });

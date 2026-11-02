@@ -213,7 +213,7 @@ export function LiveTrackingWebPage() {
   return (
     <>
       <SEO
-        title="Live Trip Tracking | MWAY & JN Consultancy Services"
+        title="Live Trip Tracking | MWAY"
         description="Track your confirmed MWAY trip live with vehicle and driver details."
         noindex={true}
       />
@@ -443,7 +443,7 @@ export function LiveTrackingWebPage() {
                 {/* Privacy & Safety Note */}
                 <div style={{ marginTop: '20px', display: 'flex', alignItems: 'center', gap: '10px', fontSize: '12px', color: '#64748B' }}>
                   <ShieldCheck style={{ width: '18px', height: '18px', color: '#059669', flexShrink: 0 }} />
-                  <span>Secure live location tracking protected by JN Consultancy Services.</span>
+                  <span>Secure live location tracking protected by MWAY.</span>
                 </div>
 
                 {lastRefreshed && (
@@ -457,7 +457,7 @@ export function LiveTrackingWebPage() {
 
           <div style={{ textAlign: 'center', marginTop: '28px' }}>
             <Link to="/" style={{ color: '#0284C7', textDecoration: 'none', fontSize: '14px', fontWeight: '600' }}>
-              ← Return to JN Consultancy Services Home
+              ← Return to MWAY Home
             </Link>
           </div>
         </div>

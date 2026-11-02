@@ -114,17 +114,17 @@ export function MwayAppPage() {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.mwayjnconsultancy.in/' },
-      { '@type': 'ListItem', position: 2, name: 'MWAY Mobile App', item: 'https://www.mwayjnconsultancy.in/mway-app' }
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://mway.in/' },
+      { '@type': 'ListItem', position: 2, name: 'MWAY Mobile App', item: 'https://mway.in/mway-app' }
     ]
   };
 
   return (
     <>
       <SEO
-        title="MWAY Mobile App | Travel Booking & Multiservice App by JN Consultancy"
-        description="Discover the MWAY mobile app by JN Consultancy Services. Book outstation cabs, savari rides, track trips live, and access all consultation services on your phone."
-        canonical="https://www.mwayjnconsultancy.in/mway-app"
+        title="MWAY Mobile App | Travel Booking & Multiservice App"
+        description="Discover the MWAY mobile app. Book outstation cabs, savari rides, track trips live, and access all consultation services on your phone."
+        canonical="https://mway.in/mway-app"
         schema={mwaySchema}
       />
       <section className="pageHero mwayHero">

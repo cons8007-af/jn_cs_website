@@ -124,10 +124,10 @@ function Header() {
     <header className={`header ${scrolled ? 'scrolled' : ''}`}>
       <div className="wrap nav">
         <Link to="/" className="brand" onClick={handleHomeClick}>
-          <img src={logo} alt="JN Consultancy Services Logo" width={40} height={40} />
+          <img src={mwayLogo} alt="MWAY Logo" width={42} height={36} style={{ width: 42, height: 'auto', borderRadius: '8px', border: 'none', boxShadow: 'none' }} />
           <div className="brandText">
-            <b>JN</b>
-            <small>CONSULTANCY SERVICES</small>
+            <b>MWAY</b>
+            <small>MULTI-SERVICE PLATFORM</small>
           </div>
         </Link>
 
@@ -207,7 +207,7 @@ function Hero() {
           <div className="heroMwayLogoWrap">
             <img
               src={mwayLogo}
-              alt="MWAY App - Mobility and Multi-Service Platform by JN Consultancy"
+              alt="MWAY - Mobility and Multi-Service Platform"
               className="heroMwayLogo"
               width={190}
               height={162}
@@ -223,7 +223,7 @@ function Hero() {
             for <em>All Your Needs</em>
           </h1>
           <p>
-            JN Consultancy Services provides trusted, professional and complete
+            MWAY provides trusted, professional and complete mobility and multi-service
             solutions for individuals, families and businesses in Perambalur and across Tamil Nadu.
           </p>
 
@@ -407,7 +407,7 @@ function ServiceCarousel() {
                   <div className="cardImageWrapper">
                     <img
                       src={item.image}
-                      alt={`${item.title} Services in Perambalur - JN Consultancy`}
+                      alt={`${item.title} Services in Perambalur - MWAY`}
                       width={896}
                       height={1200}
                       loading={idx === 0 ? 'eager' : 'lazy'}
@@ -560,9 +560,9 @@ function Home() {
   return (
     <>
       <SEO
-        title="JN Consultancy Services | Travels, Admissions, Property, Jobs, Banking & IT in Perambalur"
-        description="JN Consultancy Services in Perambalur offers trusted outstation travels, college admission guidance, verified land & property, overseas jobs, pre-owned cars, banking loans, and IT solutions."
-        canonical="https://www.mwayjnconsultancy.in/"
+        title="MWAY | Multi-Service Platform & Mobility Solutions"
+        description="MWAY in Perambalur offers trusted outstation travels, college admission guidance, verified land & property, overseas jobs, pre-owned cars, banking loans, and IT solutions."
+        canonical="https://mway.in/"
       />
       <Hero />
       <ServiceCarousel />
@@ -609,19 +609,19 @@ function ServicesPage() {
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.mwayjnconsultancy.in/' },
-          { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://www.mwayjnconsultancy.in/services' }
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://mway.in/' },
+          { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://mway.in/services' }
         ]
       },
       {
         '@type': 'ItemList',
-        name: 'JN Consultancy Services Verticals',
-        description: 'Verified professional service categories offered by JN Consultancy Services in Perambalur.',
+        name: 'MWAY Services Verticals',
+        description: 'Verified professional service categories offered by MWAY in Perambalur.',
         itemListElement: ALL_SERVICES.map((s, idx) => ({
           '@type': 'ListItem',
           position: idx + 1,
           name: s.title,
-          url: `https://www.mwayjnconsultancy.in/services/${s.id}`
+          url: `https://mway.in/services/${s.id}`
         }))
       }
     ]
@@ -630,15 +630,15 @@ function ServicesPage() {
   return (
     <>
       <SEO
-        title="Our Services | Complete Life & Business Solutions - JN Consultancy Services"
-        description="Explore all verified services by JN Consultancy Services in Perambalur: Travels, Admission guidance, Land & Property, Overseas Jobs, Pre-Owned Cars, Banking loans, and IT solutions."
-        canonical="https://www.mwayjnconsultancy.in/services"
+        title="Our Services | Complete Life & Business Solutions - MWAY"
+        description="Explore all verified services by MWAY in Perambalur: Travels, Admission guidance, Land & Property, Overseas Jobs, Pre-Owned Cars, Banking loans, and IT solutions."
+        canonical="https://mway.in/services"
         schema={servicesSchema}
       />
       <PageHero
         eyebrow="OUR SERVICES"
         title={<>Solutions for <em>real-world needs.</em></>}
-        text="Explore all JN Consultancy Services verticals and select the tailored assistance you need in Perambalur and across Tamil Nadu."
+        text="Explore all MWAY service verticals and select the tailored assistance you need in Perambalur and across Tamil Nadu."
       />
       <section className="section wrap">
         <div className="servicesCatalogGrid">
@@ -659,8 +659,8 @@ function Detail() {
     return (
       <>
         <SEO
-          title="Service Not Found | JN Consultancy Services"
-          description="The requested service was not found on JN Consultancy Services."
+          title="Service Not Found | MWAY"
+          description="The requested service was not found on MWAY."
           noindex={true}
         />
         <PageHero
@@ -678,7 +678,7 @@ function Detail() {
   }
 
   const Icon = s.icon;
-  const canonicalUrl = `https://www.mwayjnconsultancy.in/services/${s.id}`;
+  const canonicalUrl = `https://mway.in/services/${s.id}`;
 
   const detailSchema = {
     '@context': 'https://schema.org',
@@ -686,8 +686,8 @@ function Detail() {
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.mwayjnconsultancy.in/' },
-          { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://www.mwayjnconsultancy.in/services' },
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://mway.in/' },
+          { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://mway.in/services' },
           { '@type': 'ListItem', position: 3, name: s.title, item: canonicalUrl }
         ]
       },
@@ -698,8 +698,8 @@ function Detail() {
         description: s.shortDesc || s.desc,
         provider: {
           '@type': 'ProfessionalService',
-          name: 'JN Consultancy Services',
-          url: 'https://www.mwayjnconsultancy.in/',
+          name: 'MWAY',
+          url: 'https://mway.in/',
           telephone: `+91-${phone}`,
           address: {
             '@type': 'PostalAddress',
@@ -742,8 +742,8 @@ function Detail() {
     return (
       <>
         <SEO
-          title={s.metaTitle || 'Banking DSA Loans, Credit Cards & Financial Assistance | JN Consultancy Perambalur'}
-          description={s.metaDescription || 'All your financial needs in one place. Explore 16 loan options, cards, insurance, investments and calculate instant loan EMIs with MWAY / JN Consultancy Services.'}
+          title={s.metaTitle || 'Banking DSA Loans, Credit Cards & Financial Assistance | MWAY'}
+          description={s.metaDescription || 'All your financial needs in one place. Explore 16 loan options, cards, insurance, investments and calculate instant loan EMIs with MWAY.'}
           canonical={canonicalUrl}
           schema={detailSchema}
         />
@@ -755,7 +755,7 @@ function Detail() {
   return (
     <>
       <SEO
-        title={s.metaTitle || `${s.title} Services in Perambalur | JN Consultancy`}
+        title={s.metaTitle || `${s.title} Services in Perambalur | MWAY`}
         description={s.metaDescription || s.shortDesc || s.desc}
         canonical={canonicalUrl}
         schema={detailSchema}
@@ -782,7 +782,7 @@ function Detail() {
               <div className="detailCoverImage">
                 <img
                   src={s.image}
-                  alt={`${s.title} Services in Perambalur - JN Consultancy Services`}
+                  alt={`${s.title} Services in Perambalur - MWAY`}
                   width={896}
                   height={1200}
                   loading="eager"
@@ -913,22 +913,22 @@ function Careers() {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.mwayjnconsultancy.in/' },
-      { '@type': 'ListItem', position: 2, name: 'Careers', item: 'https://www.mwayjnconsultancy.in/careers' }
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://mway.in/' },
+      { '@type': 'ListItem', position: 2, name: 'Careers', item: 'https://mway.in/careers' }
     ]
   };
 
   return (
     <>
       <SEO
-        title="Careers at JN Consultancy Services | Job Openings in Perambalur"
-        description="Join JN Consultancy Services in Perambalur. Current job openings for Telecalling Executives, Social Media Influencers, and Software Developer Interns. Apply online today."
-        canonical="https://www.mwayjnconsultancy.in/careers"
+        title="Careers at MWAY | Job Openings in Perambalur"
+        description="Join MWAY in Perambalur. Current job openings for Telecalling Executives, Social Media Influencers, and Software Developer Interns. Apply online today."
+        canonical="https://mway.in/careers"
         schema={careersSchema}
       />
       <PageHero
         eyebrow="JOIN OUR TEAM"
-        title={<>Build your career with <em>JN in Perambalur.</em></>}
+        title={<>Build your career with <em>MWAY in Perambalur.</em></>}
         text="We are looking for motivated candidates across telecalling, social media engagement, and modern software development."
       />
       <section className="section wrap formGrid">
@@ -963,17 +963,17 @@ function Contact() {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.mwayjnconsultancy.in/' },
-      { '@type': 'ListItem', position: 2, name: 'Contact', item: 'https://www.mwayjnconsultancy.in/contact' }
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://mway.in/' },
+      { '@type': 'ListItem', position: 2, name: 'Contact', item: 'https://mway.in/contact' }
     ]
   };
 
   return (
     <>
       <SEO
-        title="Contact JN Consultancy Services | Office Location & Phone in Perambalur"
-        description="Get in touch with JN Consultancy Services. Office: Shop No-9, C-Block, 5Star Complex, Opposite New Bus Stand, Perambalur. Call +91 96777 96891 or email jnconsultancy26@gmail.com."
-        canonical="https://www.mwayjnconsultancy.in/contact"
+        title="Contact MWAY | Office Location & Phone in Perambalur"
+        description="Get in touch with MWAY. Office: Shop No-9, C-Block, 5Star Complex, Opposite New Bus Stand, Perambalur. Call +91 96777 96891 or email jnconsultancy26@gmail.com."
+        canonical="https://mway.in/contact"
         schema={contactSchema}
       />
       <PageHero
@@ -1024,13 +1024,13 @@ function Footer() {
       <div className="wrap footerGrid">
         <div className="footerAbout">
           <div className="footerBrandHeader">
-            <img src={logo} className="footlogo" alt="JN Consultancy Services Logo" width={44} height={44} loading="lazy" decoding="async" />
+            <img src={mwayLogo} className="footlogo" alt="MWAY Logo" width={46} height={40} loading="lazy" decoding="async" style={{ width: 46, height: 'auto', borderRadius: '8px', border: 'none' }} />
             <div>
-              <b>JN</b>
-              <small>CONSULTANCY SERVICES</small>
+              <b>MWAY</b>
+              <small>MULTI-SERVICE PLATFORM</small>
             </div>
           </div>
-          <p>One trusted destination for multiple life and business solutions in Perambalur.</p>
+          <p>One trusted destination for mobility, travels, and life & business solutions in Perambalur.</p>
           <div className="footMway">
             <MwayLogo size={52} />
             <div>
@@ -1083,7 +1083,7 @@ function Footer() {
       </div>
 
       <div className="wrap copy">
-        © {new Date().getFullYear()} JN Consultancy Services. All rights reserved.
+        © {new Date().getFullYear()} MWAY. All rights reserved.
       </div>
     </footer>
   );
@@ -1095,13 +1095,13 @@ function Chat() {
     <div className="chat">
       <div className={`chatbox ${open ? 'show' : ''}`} role="dialog" aria-label="Customer support chat">
         <div className="chatHead">
-          <b>JN Support Desk</b>
+          <b>MWAY Support Desk</b>
           <button onClick={() => setOpen(false)} aria-label="Close chat">
             <X size={17} />
           </button>
         </div>
         <div className="chatBody">
-          <p>Hi 👋 Welcome to JN Consultancy Services!</p>
+          <p>Hi 👋 Welcome to MWAY!</p>
           <p>How can our team help you today?</p>
           <p className="chatServicesNote">
             Ask about Travels, Admission, Land & Property, Jobs, Cars, Banking, or IT Software & Solutions.
@@ -1187,8 +1187,8 @@ function App() {
             element={
               <>
                 <SEO
-                  title="Page Not Found (404) | JN Consultancy Services"
-                  description="The page you are looking for does not exist on JN Consultancy Services."
+                  title="Page Not Found (404) | MWAY"
+                  description="The page you are looking for does not exist on MWAY."
                   noindex={true}
                 />
                 <PageHero

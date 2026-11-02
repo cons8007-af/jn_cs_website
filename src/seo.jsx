@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-const DEFAULT_ORIGIN = 'https://www.mwayjnconsultancy.in';
+const DEFAULT_ORIGIN = 'https://mway.in';
 const DEFAULT_IMAGE = `${DEFAULT_ORIGIN}/mway-logo-512.png`;
 
 function setMetaTag(attrName, attrValue, content) {
@@ -79,7 +79,7 @@ export function SEO({
     setMetaTag('property', 'og:url', canonicalUrl);
     setMetaTag('property', 'og:type', type);
     setMetaTag('property', 'og:image', image);
-    setMetaTag('property', 'og:site_name', 'JN Consultancy Services');
+    setMetaTag('property', 'og:site_name', 'MWAY');
     setMetaTag('property', 'og:locale', 'en_IN');
 
     // 6. Twitter Card
