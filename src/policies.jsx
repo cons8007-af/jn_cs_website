@@ -19,7 +19,7 @@ import { Mail, MapPin, Phone, AlertTriangle } from 'lucide-react';
 import { SEO } from './seo.jsx';
 
 export const CONTACT = {
-  phone: '9677796891',
+  phone: '9384611201',
   altPhone: '8695556550',
   email: 'jnconsultancy26@gmail.com',
   office:
@@ -359,7 +359,7 @@ export function ContactUsPage() {
       }
       intro="For questions about our services, the MWAY app, a booking, or a refund."
       seoTitle="Contact Us | MWAY"
-      seoDesc="Get in touch with MWAY in Perambalur. Office address: 5Star Complex, Opposite New Bus Stand. Call 9677796891."
+      seoDesc="Get in touch with MWAY in Perambalur. Office address: 5Star Complex, Opposite New Bus Stand. Call 9384611201."
       canonical="https://mway.in/contact"
     >
       <h2>JN Consultancy Services</h2>

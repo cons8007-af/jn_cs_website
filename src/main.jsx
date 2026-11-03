@@ -33,7 +33,7 @@ import BankingServicesPage from './pages/BankingServicesPage.jsx';
 import './styles.css';
 import './styles/banking.css';
 
-const phone = '9677796891';
+const phone = '9384611201';
 const altPhone = '8695556550';
 const email = 'jnconsultancy26@gmail.com';
 const office = 'Shop No-9, C-Block, 5Star Complex, Opposite New Bus Stand, Perambalur.';
