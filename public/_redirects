@@ -1,11 +1,11 @@
-# Domain Redirects: Permanently redirect old domains & www to https://mway.in
-https://www.mwayjnconsultancy.in/*  https://mway.in/:splat  301!
-https://mwayjnconsultancy.in/*      https://mway.in/:splat  301!
-http://www.mwayjnconsultancy.in/*   https://mway.in/:splat  301!
-http://mwayjnconsultancy.in/*       https://mway.in/:splat  301!
-https://www.mway.in/*               https://mway.in/:splat  301!
-http://www.mway.in/*                https://mway.in/:splat  301!
-http://mway.in/*                    https://mway.in/:splat  301!
+# Domain Redirects: Redirect apex and alternative domains to https://www.mwayjnconsultancy.in
+https://mwayjnconsultancy.in/*      https://www.mwayjnconsultancy.in/:splat  301!
+http://mwayjnconsultancy.in/*       https://www.mwayjnconsultancy.in/:splat  301!
+http://www.mwayjnconsultancy.in/*   https://www.mwayjnconsultancy.in/:splat  301!
+https://www.mway.in/*               https://www.mwayjnconsultancy.in/:splat  301!
+https://mway.in/*                   https://www.mwayjnconsultancy.in/:splat  301!
+http://www.mway.in/*                https://www.mwayjnconsultancy.in/:splat  301!
+http://mway.in/*                    https://www.mwayjnconsultancy.in/:splat  301!
 
 # Canonical 301 Redirects for Duplicate / Alias Routes
 /services/real-estate              /services/land-property             301!
@@ -23,6 +23,8 @@ http://mway.in/*                    https://mway.in/:splat  301!
 /driver-privacy-policy             /driver-privacy                     301!
 /driver-refund-policy              /refund-cancellation-policy         301!
 /driver-cancellation-policy        /refund-cancellation-policy         301!
+/app                               /download                           301!
+/download-app                      /download                           301!
 
 # SPA Fallback for Netlify and Cloudflare Pages
 /*                                 /index.html                         200

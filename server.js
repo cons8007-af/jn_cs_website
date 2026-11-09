@@ -30,23 +30,31 @@ const server = http.createServer((req, res) => {
   const host = (req.headers.host || '').toLowerCase().split(':')[0];
   const proto = req.headers['x-forwarded-proto'];
 
-  // 301 Permanent Redirect:
-  // 1. Old domain (mwayjnconsultancy.in, www.mwayjnconsultancy.in) -> https://mway.in
-  // 2. www.mway.in -> https://mway.in
-  // 3. HTTP -> HTTPS on primary domain mway.in
-  // Preserves full pathname and query parameters
-  if (host.includes('mwayjnconsultancy') || host === 'www.mway.in') {
+  // Domain & Protocol Normalization:
+  // 1. Force HTTPS in production (when forwarded over plain http)
+  if (proto === 'http') {
     res.writeHead(301, {
-      'Location': `https://mway.in${req.url}`,
+      'Location': `https://${host}${req.url}`,
       'Connection': 'close'
     });
     res.end();
     return;
   }
 
-  if (proto === 'http' && host === 'mway.in') {
+  // 2. Apex domain redirect: mwayjnconsultancy.in -> https://www.mwayjnconsultancy.in
+  if (host === 'mwayjnconsultancy.in') {
     res.writeHead(301, {
-      'Location': `https://mway.in${req.url}`,
+      'Location': `https://www.mwayjnconsultancy.in${req.url}`,
+      'Connection': 'close'
+    });
+    res.end();
+    return;
+  }
+
+  // 3. Fallback redirect for alternative domains: mway.in / www.mway.in -> https://www.mwayjnconsultancy.in
+  if (host === 'mway.in' || host === 'www.mway.in') {
+    res.writeHead(301, {
+      'Location': `https://www.mwayjnconsultancy.in${req.url}`,
       'Connection': 'close'
     });
     res.end();
@@ -54,6 +62,35 @@ const server = http.createServer((req, res) => {
   }
 
   let reqPath = req.url.split('?')[0];
+
+  // Canonical Route Aliases:
+  const ROUTE_ALIASES = {
+    '/app': '/download',
+    '/download-app': '/download',
+    '/contact-us': '/contact',
+    '/services/real-estate': '/services/land-property',
+    '/services/foreign-jobs': '/services/jobs',
+    '/services/automobile': '/services/cars',
+    '/privacy': '/privacy-policy',
+    '/terms': '/terms-and-conditions',
+    '/terms-of-service': '/terms-and-conditions',
+    '/terms-conditions': '/terms-and-conditions',
+    '/refund': '/refund-cancellation-policy',
+    '/refund-policy': '/refund-cancellation-policy',
+    '/cancellation-policy': '/refund-cancellation-policy',
+    '/driver-terms-and-conditions': '/driver-terms',
+    '/driver-privacy-policy': '/driver-privacy'
+  };
+
+  if (ROUTE_ALIASES[reqPath]) {
+    res.writeHead(301, {
+      'Location': ROUTE_ALIASES[reqPath],
+      'Connection': 'close'
+    });
+    res.end();
+    return;
+  }
+
   if (reqPath === '/') reqPath = '/index.html';
 
   let filePath = path.join(DIST_DIR, reqPath);
@@ -81,8 +118,10 @@ const server = http.createServer((req, res) => {
         filePath = subIndex;
       } else {
         // Return 404 for missing static files with explicit extensions (e.g. .xml, .txt, .png, .js)
+        // Exempt /track paths so tokens like /track/19.abc... route to SPA index.html
+        const isTrackRoute = reqPath.startsWith('/track');
         const reqExt = path.extname(reqPath).toLowerCase();
-        if (reqExt && reqExt !== '.html') {
+        if (!isTrackRoute && reqExt && reqExt !== '.html') {
           res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
           res.end('404 Not Found');
           return;

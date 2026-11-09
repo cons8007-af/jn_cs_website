@@ -26,19 +26,28 @@ const server = http.createServer((req, res) => {
   const host = (req.headers.host || '').toLowerCase().split(':')[0];
   const proto = req.headers['x-forwarded-proto'];
 
-  // 301 Permanent Redirects:
-  if (host.includes('mwayjnconsultancy') || host === 'www.mway.in') {
+  // Domain & Protocol Normalization:
+  if (proto === 'http') {
     res.writeHead(301, {
-      'Location': `https://mway.in${req.url}`,
+      'Location': `https://${host}${req.url}`,
       'Connection': 'close'
     });
     res.end();
     return;
   }
 
-  if (proto === 'http' && host === 'mway.in') {
+  if (host === 'mwayjnconsultancy.in') {
     res.writeHead(301, {
-      'Location': `https://mway.in${req.url}`,
+      'Location': `https://www.mwayjnconsultancy.in${req.url}`,
+      'Connection': 'close'
+    });
+    res.end();
+    return;
+  }
+
+  if (host === 'mway.in' || host === 'www.mway.in') {
+    res.writeHead(301, {
+      'Location': `https://www.mwayjnconsultancy.in${req.url}`,
       'Connection': 'close'
     });
     res.end();
@@ -46,6 +55,34 @@ const server = http.createServer((req, res) => {
   }
 
   let reqPath = req.url.split('?')[0];
+
+  const ROUTE_ALIASES = {
+    '/app': '/download',
+    '/download-app': '/download',
+    '/contact-us': '/contact',
+    '/services/real-estate': '/services/land-property',
+    '/services/foreign-jobs': '/services/jobs',
+    '/services/automobile': '/services/cars',
+    '/privacy': '/privacy-policy',
+    '/terms': '/terms-and-conditions',
+    '/terms-of-service': '/terms-and-conditions',
+    '/terms-conditions': '/terms-and-conditions',
+    '/refund': '/refund-cancellation-policy',
+    '/refund-policy': '/refund-cancellation-policy',
+    '/cancellation-policy': '/refund-cancellation-policy',
+    '/driver-terms-and-conditions': '/driver-terms',
+    '/driver-privacy-policy': '/driver-privacy'
+  };
+
+  if (ROUTE_ALIASES[reqPath]) {
+    res.writeHead(301, {
+      'Location': ROUTE_ALIASES[reqPath],
+      'Connection': 'close'
+    });
+    res.end();
+    return;
+  }
+
   if (reqPath === '/') reqPath = '/index.html';
   let filePath = path.join(DIST_DIR, reqPath);
 
@@ -110,36 +147,57 @@ server.listen(3456, '127.0.0.1', async () => {
     { url: '/careers', expectStatus: 200, expectType: 'text/html', check: 'Careers at MWAY' },
     { url: '/contact', expectStatus: 200, expectType: 'text/html', check: 'Contact MWAY' },
     { url: '/mway-app', expectStatus: 200, expectType: 'text/html', check: 'MWAY Mobile App' },
+    { url: '/download', expectStatus: 200, expectType: 'text/html', check: 'Download MWAY App' },
     { url: '/privacy-policy', expectStatus: 200, expectType: 'text/html', check: 'Privacy Policy' },
     { url: '/terms-and-conditions', expectStatus: 200, expectType: 'text/html', check: 'Terms and Conditions' },
     { url: '/refund-cancellation-policy', expectStatus: 200, expectType: 'text/html', check: 'Refund & Cancellation Policy' },
     { url: '/sitemap.xml', expectStatus: 200, expectType: 'application/xml', check: 'https://mway.in/services/travels' },
     { url: '/robots.txt', expectStatus: 200, expectType: 'text/plain', check: 'Sitemap: https://mway.in/sitemap.xml' },
     { url: '/nonexistent.xml', expectStatus: 404, expectType: 'text/plain', check: '404 Not Found' },
-    // 301 Permanent Redirect tests
+    // Railway Domain & Route Redirect tests
     {
       url: '/',
       headers: { host: 'mwayjnconsultancy.in' },
       expectStatus: 301,
-      expectLocation: 'https://mway.in/'
+      expectLocation: 'https://www.mwayjnconsultancy.in/'
     },
     {
-      url: '/services/travels?ref=direct',
+      url: '/download',
+      headers: { host: 'mwayjnconsultancy.in' },
+      expectStatus: 301,
+      expectLocation: 'https://www.mwayjnconsultancy.in/download'
+    },
+    {
+      url: '/download',
+      headers: { host: 'www.mwayjnconsultancy.in' },
+      expectStatus: 200,
+      expectType: 'text/html',
+      check: 'Download MWAY App'
+    },
+    {
+      url: '/download/',
+      headers: { host: 'www.mwayjnconsultancy.in' },
+      expectStatus: 200,
+      expectType: 'text/html',
+      check: 'Download MWAY App'
+    },
+    {
+      url: '/app',
       headers: { host: 'www.mwayjnconsultancy.in' },
       expectStatus: 301,
-      expectLocation: 'https://mway.in/services/travels?ref=direct'
+      expectLocation: '/download'
     },
     {
       url: '/careers',
       headers: { host: 'www.mway.in' },
       expectStatus: 301,
-      expectLocation: 'https://mway.in/careers'
+      expectLocation: 'https://www.mwayjnconsultancy.in/careers'
     },
     {
       url: '/contact',
-      headers: { host: 'mway.in', 'x-forwarded-proto': 'http' },
+      headers: { host: 'www.mwayjnconsultancy.in', 'x-forwarded-proto': 'http' },
       expectStatus: 301,
-      expectLocation: 'https://mway.in/contact'
+      expectLocation: 'https://www.mwayjnconsultancy.in/contact'
     }
   ];
 

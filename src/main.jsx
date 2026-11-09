@@ -21,6 +21,7 @@ import itsolutionsImg from './assets/service-itsolutions.jpg';
 import jobsImg from './assets/service-jobs.png';
 
 import { MwaySection, MwayAppPage, MwayLogo, MWAY_TAGLINE } from './mway.jsx';
+import { DownloadPage } from './pages/DownloadPage.jsx';
 import {
   PrivacyPolicy, TermsAndConditions, RefundCancellationPolicy,
   ContactUsPage, AccountDeletion, DriverTermsPolicy, DriverPrivacyPolicy
@@ -1147,6 +1148,7 @@ function App() {
           <Route path="/careers" element={<Careers />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/mway-app" element={<MwayAppPage />} />
+          <Route path="/download" element={<DownloadPage />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
           <Route path="/refund-cancellation-policy" element={<RefundCancellationPolicy />} />
@@ -1155,6 +1157,8 @@ function App() {
           <Route path="/account-deletion" element={<AccountDeletion />} />
 
           {/* Canonical 301 Redirects for Alias & Duplicate URLs */}
+          <Route path="/download-app" element={<Navigate to="/download" replace />} />
+          <Route path="/app" element={<Navigate to="/download" replace />} />
           <Route path="/banking" element={<Navigate to="/services/banking" replace />} />
           <Route path="/loan-calculator" element={<Navigate to="/services/banking" replace />} />
           <Route path="/services/real-estate" element={<Navigate to="/services/land-property" replace />} />
@@ -1180,6 +1184,7 @@ function App() {
           {/* Public Live Tracking (Transactional Utility - Noindexed) */}
           <Route path="/track" element={<LiveTrackingWebPage />} />
           <Route path="/track/:token" element={<LiveTrackingWebPage />} />
+          <Route path="/track/:token/*" element={<LiveTrackingWebPage />} />
 
           {/* 404 Error Route */}
           <Route

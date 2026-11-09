@@ -83,11 +83,11 @@ export function MwaySection() {
             ))}
           </ul>
           <div className="mwayActions">
-            <Link className="btn primary" to="/mway-app">
-              View MWAY App Information <ArrowRight size={16} />
+            <Link className="btn primary" to="/download">
+              Download MWAY App <ArrowRight size={16} />
             </Link>
-            <Link className="btn ghost" to="/contact">
-              Talk to our team
+            <Link className="btn ghost" to="/mway-app">
+              App Information
             </Link>
           </div>
           {/* No store badges: the app is not published to a store we can
@@ -181,9 +181,9 @@ export function MwayAppPage() {
 
           <h3>Getting the app</h3>
           <p>
-            MWAY is distributed directly by JN Consultancy Services.{' '}
-            <Link to="/contact">Contact our team</Link> and we will tell you
-            how to install the current version for your device.
+            Visit our permanent download page at{' '}
+            <Link to="/download">Download MWAY App</Link> to check the latest
+            release status and download the app directly from Google Play.
           </p>
 
           <h3>Your data and your account</h3>
@@ -198,8 +198,8 @@ export function MwayAppPage() {
         <aside className="mwayAside">
           <div className="mwayAsideCard">
             <MwayLockup size={92} />
-            <Link className="btn primary full" to="/contact">
-              Contact us about MWAY <ArrowRight size={16} />
+            <Link className="btn primary full" to="/download">
+              Download MWAY App <ArrowRight size={16} />
             </Link>
           </div>
         </aside>

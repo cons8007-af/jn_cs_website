@@ -2507,3 +2507,613 @@ img {
   }
 }
 
+
+/* ==========================================================================
+   MWAY Permanent Download Landing Page (/download)
+   ========================================================================== */
+
+.downloadPageRoot {
+  min-height: 100vh;
+  background: var(--bg-pale-gradient);
+}
+
+.downloadHeroSection {
+  padding: 60px 0 70px 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.downloadHeroWrap {
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.downloadHeroLogoContainer {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.downloadHeroLogoGlow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 140px;
+  height: 140px;
+  background: radial-gradient(circle, rgba(8, 102, 245, 0.22) 0%, rgba(8, 102, 245, 0) 70%);
+  transform: translate(-50%, -50%);
+  filter: blur(14px);
+  pointer-events: none;
+}
+
+.downloadHeroLogo {
+  position: relative;
+  width: 130px;
+  height: auto;
+  aspect-ratio: 916 / 784;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 20px rgba(8, 102, 245, 0.18));
+}
+
+.downloadEyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--primary-blue);
+  text-transform: uppercase;
+  background: rgba(8, 102, 245, 0.08);
+  border: 1px solid rgba(8, 102, 245, 0.2);
+  border-radius: var(--radius-pill);
+  padding: 5px 14px;
+  margin-bottom: 12px;
+}
+
+.eyebrowIcon {
+  color: var(--primary-blue);
+}
+
+.downloadMainHeading {
+  font-size: clamp(32px, 4.5vw, 48px);
+  font-weight: 900;
+  color: var(--deep-navy);
+  line-height: 1.15;
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+
+.downloadSubHeadingTagline {
+  display: block;
+  font-size: clamp(16px, 2.4vw, 22px);
+  font-weight: 700;
+  color: var(--primary-blue);
+  margin-top: 6px;
+  letter-spacing: 0;
+}
+
+.downloadLeadIntro {
+  font-size: 16px;
+  color: var(--slate-body);
+  line-height: 1.65;
+  max-width: 660px;
+  margin: 18px auto 36px auto;
+}
+
+.downloadLeadIntro strong {
+  color: var(--deep-navy);
+  font-weight: 700;
+}
+
+.downloadActionCard {
+  max-width: 580px;
+  margin: 0 auto;
+  background: var(--white);
+  border: 1.5px solid #DBEAFE;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 24px 50px rgba(8, 102, 245, 0.12);
+  padding: 34px 30px;
+  text-align: left;
+}
+
+.downloadStatusRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 22px;
+  flex-wrap: wrap;
+}
+
+.downloadStatusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  text-transform: uppercase;
+}
+
+.downloadStatusBadge.live {
+  background: #DCFCE7;
+  color: #15803D;
+  border: 1px solid #BBF7D0;
+}
+
+.downloadStatusBadge.comingSoon {
+  background: #FEF3C7;
+  color: #92400E;
+  border: 1px solid #FDE68A;
+}
+
+.statusDot.live {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #16A34A;
+  box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.25);
+  animation: pulseDot 2s infinite;
+}
+
+@keyframes pulseDot {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.5); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(22, 163, 74, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
+}
+
+.statusClock {
+  color: #B45309;
+}
+
+.downloadPlatformTag {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--slate-muted);
+  background: #F1F5F9;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.downloadButtonContainer {
+  margin-bottom: 20px;
+}
+
+.googlePlayActionBtn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: #0F172A;
+  color: #FFFFFF !important;
+  border-radius: 14px;
+  padding: 16px 22px;
+  text-decoration: none;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.2);
+  transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+  user-select: none;
+}
+
+.googlePlayActionBtn.active {
+  background: #0F172A;
+  cursor: pointer;
+}
+
+.googlePlayActionBtn.active:hover {
+  background: #020617;
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.32);
+}
+
+.googlePlayActionBtn.disabled {
+  background: #E2E8F0;
+  color: #64748B !important;
+  box-shadow: none;
+  cursor: not-allowed;
+  border: 1px solid #CBD5E1;
+}
+
+.googlePlaySvg {
+  flex-shrink: 0;
+}
+
+.googlePlaySvg.disabled {
+  color: #94A3B8;
+}
+
+.googlePlayBtnText {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+  margin-left: 16px;
+}
+
+.btnSubText {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.btnMainText {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-top: 2px;
+}
+
+.btnArrow {
+  opacity: 0.75;
+  transition: transform 0.2s ease;
+}
+
+.googlePlayActionBtn.active:hover .btnArrow {
+  transform: translateX(4px);
+  opacity: 1;
+}
+
+.btnClock {
+  color: #94A3B8;
+}
+
+.downloadNoticeBox {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.downloadNoticeBox.live {
+  background: #F0FDF4;
+  border: 1px solid #BBF7D0;
+  color: #166534;
+}
+
+.downloadNoticeBox.comingSoon {
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  color: #1E3A8A;
+}
+
+.noticeIcon.live {
+  color: #16A34A;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.noticeIcon.comingSoon {
+  color: var(--primary-blue);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.noticeText strong {
+  display: block;
+  font-size: 13.5px;
+  color: #1E3A8A;
+  margin-bottom: 4px;
+}
+
+.noticeText p {
+  margin: 0;
+  color: #3B82F6;
+  font-size: 13px;
+}
+
+.noticeText code {
+  background: rgba(8, 102, 245, 0.1);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-family: inherit;
+  color: #1E40AF;
+}
+
+.downloadPermanentGuarantee {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: #F8FAFC;
+  border: 1px dashed #CBD5E1;
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 22px;
+}
+
+.guaranteeItem {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.guaranteeLabel {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--slate-muted);
+}
+
+.guaranteeValue {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--deep-navy);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.copyUrlBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary-blue);
+  background: var(--white);
+  border: 1px solid #E2E8F0;
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.copyUrlBtn:hover {
+  background: #F1F5F9;
+  border-color: #CBD5E1;
+}
+
+.downloadSpecsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  border-top: 1px solid #F1F5F9;
+  padding-top: 18px;
+  text-align: center;
+}
+
+.specCol {
+  display: flex;
+  flex-direction: column;
+}
+
+.specTitle {
+  font-size: 11px;
+  color: var(--slate-muted);
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.specDesc {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--deep-navy);
+}
+
+/* Features Section */
+.downloadFeaturesSection {
+  padding: 80px 0;
+  background: var(--white);
+}
+
+.downloadFeaturesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+  margin-top: 45px;
+}
+
+.featureCard {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: var(--radius-md);
+  padding: 28px 24px;
+  transition: var(--transition-smooth);
+}
+
+.featureCard:hover {
+  transform: translateY(-4px);
+  background: #FFFFFF;
+  border-color: #BFDBFE;
+  box-shadow: var(--shadow-md);
+}
+
+.featureIconBox {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  background: var(--primary-blue-light);
+  color: var(--primary-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.featureCard h3 {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--deep-navy);
+  margin-bottom: 8px;
+}
+
+.featureCard p {
+  font-size: 14px;
+  color: var(--slate-body);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Support Card */
+.downloadSupportSection {
+  padding: 60px 0 90px 0;
+  background: var(--bg-pale);
+}
+
+.downloadSupportWrap {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.downloadSupportCard {
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+  color: #FFFFFF;
+  border-radius: var(--radius-lg);
+  padding: 44px 40px;
+  display: grid;
+  grid-template-columns: 1.3fr 0.9fr;
+  gap: 40px;
+  align-items: center;
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.25);
+}
+
+.supportBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: #38BDF8;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.supportContent h3 {
+  font-size: clamp(22px, 3vw, 28px);
+  font-weight: 800;
+  color: #FFFFFF;
+  line-height: 1.25;
+  margin-bottom: 12px;
+}
+
+.supportContent p {
+  font-size: 14.5px;
+  color: #94A3B8;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.supportContactButtons {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.supportContactButtons .btn.secondary {
+  background: rgba(255, 255, 255, 0.12);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.supportContactButtons .btn.secondary:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.supportMeta {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.metaRow {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.metaLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #64748B;
+  text-transform: uppercase;
+}
+
+.metaRow a,
+.metaRow span {
+  font-size: 13.5px;
+  color: #E2E8F0;
+  text-decoration: none;
+}
+
+.metaRow a:hover {
+  color: #38BDF8;
+  text-decoration: underline;
+}
+
+.metaLinks {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.metaLinks a {
+  color: #94A3B8;
+}
+
+.metaLinks a:hover {
+  color: #FFFFFF;
+}
+
+.metaLinks span {
+  color: #475569;
+}
+
+@media (max-width: 900px) {
+  .downloadFeaturesGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .downloadSupportCard {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    padding: 32px 24px;
+  }
+}
+
+@media (max-width: 640px) {
+  .downloadHeroSection {
+    padding: 40px 0 50px 0;
+  }
+
+  .downloadActionCard {
+    padding: 24px 18px;
+  }
+
+  .downloadSpecsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .downloadFeaturesGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .supportContactButtons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .supportContactButtons .btn {
+    justify-content: center;
+  }
+}

@@ -5,7 +5,19 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { SEO } from './seo.jsx';
 
-const API_BASE = 'https://consbackend-production.up.railway.app';
+const STAGING_API = 'https://consbackend-staging.up.railway.app';
+const PROD_API = 'https://consbackend-production.up.railway.app';
+
+function getInitialApiBase() {
+  if (typeof window !== 'undefined') {
+    const search = window.location.search || '';
+    const host = window.location.hostname || '';
+    if (search.includes('env=staging') || search.includes('staging=true') || host.includes('staging') || host.includes('localhost')) {
+      return STAGING_API;
+    }
+  }
+  return import.meta.env.VITE_API_URL || PROD_API;
+}
 
 function TrackingMap({ data }) {
   const mapContainerRef = useRef(null);
@@ -151,6 +163,7 @@ export function LiveTrackingWebPage() {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [lastRefreshed, setLastRefreshed] = useState(null);
+  const [apiBase, setApiBase] = useState(getInitialApiBase);
 
   useEffect(() => {
     if (!token) {
@@ -164,12 +177,29 @@ export function LiveTrackingWebPage() {
 
     const fetchTracking = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/bookings/public-track/${encodeURIComponent(token)}`);
-        const json = await res.json();
+        let currentBase = apiBase;
+        let res = await fetch(`${currentBase}/api/bookings/public-track/${encodeURIComponent(token)}`);
+        let json = await res.json().catch(() => null);
+
+        // If not found or failed on currentBase, try alternate backend (staging vs prod)
+        if ((!res.ok || !json || json.ok === false) && (res.status === 404 || res.status === 400)) {
+          const alternateBase = currentBase === PROD_API ? STAGING_API : PROD_API;
+          try {
+            const altRes = await fetch(`${alternateBase}/api/bookings/public-track/${encodeURIComponent(token)}`);
+            const altJson = await altRes.json().catch(() => null);
+            if (altRes.ok && altJson && altJson.ok !== false) {
+              currentBase = alternateBase;
+              setApiBase(alternateBase);
+              res = altRes;
+              json = altJson;
+            }
+          } catch (_) {}
+        }
+
         if (!isMounted) return;
 
-        if (!res.ok || json.ok === false) {
-          setError(json.message || json.reason || 'Tracking is not available for this link.');
+        if (!res.ok || !json || json.ok === false) {
+          setError(json?.message || json?.reason || 'Tracking is not available for this link.');
           setData(null);
           if (timerId) clearInterval(timerId);
         } else {
@@ -198,7 +228,7 @@ export function LiveTrackingWebPage() {
       isMounted = false;
       if (timerId) clearInterval(timerId);
     };
-  }, [token]);
+  }, [token, apiBase]);
 
   const getStatusLabel = (trip) => {
     if (!trip) return '';

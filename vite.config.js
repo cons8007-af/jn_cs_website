@@ -288,6 +288,40 @@ const CANONICAL_ROUTES = [
     }
   },
   {
+    path: '/download',
+    title: 'Download MWAY App | Official Mobile App - JN Consultancy Services',
+    description: 'Download the official MWAY mobile app by JN Consultancy Services. Book outstation cabs, savari rides, track trips live, and access education, property & banking services in Perambalur.',
+    canonical: 'https://www.mwayjnconsultancy.in/download',
+    schema: {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.mwayjnconsultancy.in/' },
+            { '@type': 'ListItem', position: 2, name: 'Download App', item: 'https://www.mwayjnconsultancy.in/download' }
+          ]
+        },
+        {
+          '@type': 'SoftwareApplication',
+          name: 'MWAY',
+          operatingSystem: 'ANDROID',
+          applicationCategory: 'TravelApplication',
+          offers: {
+            '@type': 'Offer',
+            price: '0',
+            priceCurrency: 'INR'
+          },
+          publisher: {
+            '@type': 'Organization',
+            name: 'JN Consultancy Services',
+            url: 'https://www.mwayjnconsultancy.in/'
+          }
+        }
+      ]
+    }
+  },
+  {
     path: '/privacy-policy',
     title: 'Privacy Policy | MWAY',
     description: 'Read how MWAY and the MWAY mobile app collect, use, and protect your personal information in compliance with privacy standards.',
@@ -343,6 +377,13 @@ function staticSeoGenerator() {
 
       // Always maintain 404.html fallback
       copyFileSync(baseHtmlPath, resolve(outDir, '404.html'));
+
+      // Ensure /track/index.html exists for static hosts / SPA fallback
+      const trackDir = resolve(outDir, 'track');
+      if (!existsSync(trackDir)) {
+        mkdirSync(trackDir, { recursive: true });
+      }
+      copyFileSync(baseHtmlPath, resolve(trackDir, 'index.html'));
 
       const baseHtml = readFileSync(baseHtmlPath, 'utf8');
 
