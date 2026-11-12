@@ -71,7 +71,8 @@ const server = http.createServer((req, res) => {
     '/refund-policy': '/refund-cancellation-policy',
     '/cancellation-policy': '/refund-cancellation-policy',
     '/driver-terms-and-conditions': '/driver-terms',
-    '/driver-privacy-policy': '/driver-privacy'
+    '/driver-privacy-policy': '/driver-privacy',
+    '/account-deletion': '/delete-account'
   };
 
   if (ROUTE_ALIASES[reqPath]) {
@@ -151,6 +152,7 @@ server.listen(3456, '127.0.0.1', async () => {
     { url: '/privacy-policy', expectStatus: 200, expectType: 'text/html', check: 'Privacy Policy' },
     { url: '/terms-and-conditions', expectStatus: 200, expectType: 'text/html', check: 'Terms and Conditions' },
     { url: '/refund-cancellation-policy', expectStatus: 200, expectType: 'text/html', check: 'Refund & Cancellation Policy' },
+    { url: '/delete-account', expectStatus: 200, expectType: 'text/html', check: 'Delete Account & Data Removal Request' },
     { url: '/sitemap.xml', expectStatus: 200, expectType: 'application/xml', check: 'https://mway.in/services/travels' },
     { url: '/robots.txt', expectStatus: 200, expectType: 'text/plain', check: 'Sitemap: https://mway.in/sitemap.xml' },
     { url: '/nonexistent.xml', expectStatus: 404, expectType: 'text/plain', check: '404 Not Found' },
@@ -186,6 +188,12 @@ server.listen(3456, '127.0.0.1', async () => {
       headers: { host: 'www.mwayjnconsultancy.in' },
       expectStatus: 301,
       expectLocation: '/download'
+    },
+    {
+      url: '/account-deletion',
+      headers: { host: 'www.mwayjnconsultancy.in' },
+      expectStatus: 301,
+      expectLocation: '/delete-account'
     },
     {
       url: '/careers',

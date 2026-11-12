@@ -355,7 +355,25 @@ const CANONICAL_ROUTES = [
     path: '/account-deletion',
     title: 'Account & Data Deletion Request | MWAY Mobile App',
     description: 'Official procedure to submit an account deletion and data removal request for the MWAY mobile application.',
-    canonical: 'https://mway.in/account-deletion'
+    canonical: 'https://www.mwayjnconsultancy.in/delete-account'
+  },
+  {
+    path: '/delete-account',
+    title: 'Delete Account & Data Removal Request | MWAY',
+    description: 'Official procedure to submit an account deletion and personal data removal request for the MWAY mobile applications.',
+    canonical: 'https://www.mwayjnconsultancy.in/delete-account',
+    schema: {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.mwayjnconsultancy.in/' },
+            { '@type': 'ListItem', position: 2, name: 'Delete Account', item: 'https://www.mwayjnconsultancy.in/delete-account' }
+          ]
+        }
+      ]
+    }
   }
 ];
 

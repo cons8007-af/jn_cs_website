@@ -179,7 +179,7 @@ export function PrivacyPolicy() {
       <p>
         You can ask us for a copy of the information we hold about you, ask us
         to correct it, or ask us to delete your account — see{' '}
-        <Link to="/account-deletion">Account and Data Deletion</Link>.
+        <Link to="/delete-account">Account and Data Deletion</Link>.
       </p>
 
       <h2>Children</h2>

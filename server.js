@@ -79,7 +79,8 @@ const server = http.createServer((req, res) => {
     '/refund-policy': '/refund-cancellation-policy',
     '/cancellation-policy': '/refund-cancellation-policy',
     '/driver-terms-and-conditions': '/driver-terms',
-    '/driver-privacy-policy': '/driver-privacy'
+    '/driver-privacy-policy': '/driver-privacy',
+    '/account-deletion': '/delete-account'
   };
 
   if (ROUTE_ALIASES[reqPath]) {

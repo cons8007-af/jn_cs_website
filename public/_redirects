@@ -25,6 +25,7 @@ http://mway.in/*                    https://www.mwayjnconsultancy.in/:splat  301
 /driver-cancellation-policy        /refund-cancellation-policy         301!
 /app                               /download                           301!
 /download-app                      /download                           301!
+/account-deletion                  /delete-account                     301!
 
 # SPA Fallback for Netlify and Cloudflare Pages
 /*                                 /index.html                         200

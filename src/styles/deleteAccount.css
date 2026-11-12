@@ -1,0 +1,614 @@
+/* ==========================================================================
+   MWAY Delete Account & Data Privacy Page Styles
+   Matching MWAY Brand Design System
+   ========================================================================== */
+
+.deleteAccountPage {
+  background: #F8FAFD;
+  padding-bottom: 80px;
+}
+
+/* Breadcrumb Navigation */
+.deleteBreadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  color: var(--slate-muted);
+  margin-bottom: 24px;
+}
+
+.deleteBreadcrumb a {
+  color: var(--primary-blue);
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: var(--transition-smooth);
+}
+
+.deleteBreadcrumb a:hover {
+  color: var(--primary-blue-hover);
+  text-decoration: underline;
+}
+
+.deleteBreadcrumb .sep {
+  color: var(--slate-light);
+  font-size: 12px;
+}
+
+/* Hero Section */
+.deleteHero {
+  background: linear-gradient(135deg, #0A1E3B 0%, #102746 60%, #0F3460 100%);
+  color: var(--white);
+  padding: 56px 0 48px;
+  position: relative;
+  overflow: hidden;
+}
+
+.deleteHero::after {
+  content: '';
+  position: absolute;
+  top: -40%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(8, 102, 245, 0.25) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.deleteHeroEyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(8, 102, 245, 0.2);
+  border: 1px solid rgba(8, 102, 245, 0.4);
+  color: #60A5FA;
+  font-size: 12.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 16px;
+}
+
+.deleteHeroTitle {
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 16px;
+  letter-spacing: -0.5px;
+}
+
+.deleteHeroTitle span {
+  color: #60A5FA;
+}
+
+.deleteHeroLead {
+  font-size: clamp(15px, 2vw, 17px);
+  color: #CBD5E1;
+  max-width: 760px;
+  line-height: 1.65;
+  margin-bottom: 24px;
+}
+
+.deleteHeroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+}
+
+.btn-back-home {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--white);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  text-decoration: none;
+  transition: var(--transition-smooth);
+}
+
+.btn-back-home:hover {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.35);
+  color: var(--white);
+  transform: translateY(-1px);
+}
+
+/* Overview Highlights Grid */
+.deleteHighlightsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: -30px;
+  margin-bottom: 40px;
+  position: relative;
+  z-index: 2;
+}
+
+.highlightCard {
+  background: var(--white);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: 0 8px 24px rgba(16, 39, 70, 0.08);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.highlightCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(16, 39, 70, 0.12);
+}
+
+.highlightIconWrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  flex-shrink: 0;
+}
+
+.highlightIconWrap.blue {
+  background: #EFF6FF;
+  color: var(--primary-blue);
+}
+
+.highlightIconWrap.amber {
+  background: #FEF3C7;
+  color: #D97706;
+}
+
+.highlightIconWrap.emerald {
+  background: #ECFDF5;
+  color: #059669;
+}
+
+.highlightCard h3 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--deep-navy);
+  margin-bottom: 8px;
+}
+
+.highlightCard p {
+  font-size: 14px;
+  color: var(--slate-body);
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* Main Content Container */
+.deleteContentCard {
+  background: var(--white);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: clamp(24px, 4vw, 44px);
+  box-shadow: var(--shadow-subtle);
+  margin-bottom: 32px;
+}
+
+.deleteContentCard h2 {
+  font-size: clamp(20px, 3vw, 24px);
+  font-weight: 800;
+  color: var(--deep-navy);
+  margin-top: 0;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.deleteContentCard h2 svg {
+  color: var(--primary-blue);
+}
+
+.deleteSectionIntro {
+  font-size: 15px;
+  color: var(--slate-body);
+  line-height: 1.65;
+  margin-bottom: 24px;
+}
+
+/* Steps Timeline */
+.stepsTimeline {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-bottom: 32px;
+}
+
+.stepItem {
+  display: flex;
+  gap: 18px;
+  background: #F8FAFD;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 20px;
+  transition: border-color 0.2s ease;
+}
+
+.stepItem:hover {
+  border-color: #CBD5E1;
+}
+
+.stepBadge {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--primary-blue);
+  color: var(--white);
+  font-size: 16px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stepBody {
+  flex: 1;
+}
+
+.stepBody h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--deep-navy);
+  margin-bottom: 6px;
+}
+
+.stepBody p {
+  font-size: 14.5px;
+  color: var(--slate-body);
+  line-height: 1.6;
+  margin: 0 0 10px;
+}
+
+.stepBody ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.stepBody li {
+  font-size: 14px;
+  color: var(--slate-body);
+  line-height: 1.55;
+  margin-bottom: 6px;
+}
+
+/* Action Request Box */
+.deletionActionBox {
+  background: linear-gradient(135deg, #EFF6FF 0%, #F0FDF4 100%);
+  border: 1.5px solid #BFDBFE;
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  margin: 28px 0;
+}
+
+.deletionActionBoxHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.deletionActionBoxHeader h3 {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--deep-navy);
+  margin: 0;
+}
+
+.officialEmailPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--white);
+  border: 1px solid #93C5FD;
+  color: var(--primary-blue);
+  font-weight: 700;
+  font-size: 15px;
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 18px;
+}
+
+.deletionButtonRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.btn-send-email {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--primary-blue);
+  color: var(--white);
+  font-size: 14.5px;
+  font-weight: 700;
+  padding: 12px 24px;
+  border-radius: var(--radius-pill);
+  text-decoration: none;
+  transition: var(--transition-smooth);
+  box-shadow: 0 4px 14px rgba(8, 102, 245, 0.3);
+}
+
+.btn-send-email:hover {
+  background: var(--primary-blue-hover);
+  color: var(--white);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(8, 102, 245, 0.4);
+}
+
+.btn-copy-template {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--white);
+  color: var(--slate-dark);
+  font-size: 14.5px;
+  font-weight: 600;
+  padding: 12px 22px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid #CBD5E1;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.btn-copy-template:hover {
+  background: #F8FAFC;
+  border-color: #94A3B8;
+  transform: translateY(-1px);
+}
+
+.btn-copy-template.copied {
+  background: #ECFDF5;
+  color: #065F46;
+  border-color: #6EE7B7;
+}
+
+/* Template Code Preview Box */
+.emailTemplatePreview {
+  background: var(--white);
+  border: 1px solid #CBD5E1;
+  border-radius: 10px;
+  padding: 18px;
+  font-family: inherit;
+  font-size: 13.5px;
+  color: var(--slate-dark);
+  line-height: 1.65;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Data Comparison Grid */
+.dataScopeGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+  margin: 24px 0 32px;
+}
+
+.dataScopeBox {
+  border-radius: 14px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.dataScopeBox.deleted {
+  background: #FFF1F2;
+  border: 1.5px solid #FECDD3;
+}
+
+.dataScopeBox.retained {
+  background: #F0FDF4;
+  border: 1.5px solid #BBF7D0;
+}
+
+.dataScopeBoxHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.dataScopeBoxHeader h3 {
+  font-size: 17px;
+  font-weight: 800;
+  margin: 0;
+}
+
+.dataScopeBox.deleted h3 {
+  color: #9F1239;
+}
+
+.dataScopeBox.retained h3 {
+  color: #14532D;
+}
+
+.dataScopeBox ul {
+  padding-left: 20px;
+  margin: 0;
+}
+
+.dataScopeBox li {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+.dataScopeBox.deleted li {
+  color: #881337;
+}
+
+.dataScopeBox.retained li {
+  color: #166534;
+}
+
+/* Notice & Policy Notes */
+.policyNoticeBox {
+  display: flex;
+  gap: 14px;
+  background: #FFFBEB;
+  border: 1px solid #FDE68A;
+  border-radius: 12px;
+  padding: 18px 22px;
+  margin-bottom: 24px;
+}
+
+.policyNoticeBox svg {
+  color: #D97706;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.policyNoticeBox h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #92400E;
+  margin: 0 0 4px;
+}
+
+.policyNoticeBox p {
+  font-size: 14px;
+  color: #78350F;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* Support Office Contact Card */
+.supportOfficeGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.officeContactItem {
+  background: #F8FAFD;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 18px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.officeContactItem svg {
+  color: var(--primary-blue);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.officeContactItem b {
+  display: block;
+  font-size: 13px;
+  color: var(--slate-muted);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  letter-spacing: 0.5px;
+}
+
+.officeContactItem a,
+.officeContactItem p {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--deep-navy);
+  text-decoration: none;
+  margin: 0;
+  line-height: 1.45;
+}
+
+.officeContactItem a:hover {
+  color: var(--primary-blue);
+  text-decoration: underline;
+}
+
+/* Bottom Bar */
+.deletePageBottomNav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-top: 24px;
+  border-top: 1px solid #E2E8F0;
+  margin-top: 36px;
+}
+
+.deletePageBottomNav a {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-blue);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.deletePageBottomNav a:hover {
+  text-decoration: underline;
+}
+
+.lastReviewedDate {
+  font-size: 13px;
+  color: var(--slate-muted);
+  margin: 0;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .deleteHero {
+    padding: 36px 0 32px;
+  }
+  .highlightCard {
+    padding: 18px;
+  }
+  .deleteContentCard {
+    padding: 20px 16px;
+  }
+  .stepItem {
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+  }
+  .stepBadge {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+  .deletionActionBox {
+    padding: 20px 16px;
+  }
+  .deletionButtonRow {
+    flex-direction: column;
+  }
+  .btn-send-email,
+  .btn-copy-template {
+    width: 100%;
+    justify-content: center;
+  }
+  .dataScopeGrid {
+    grid-template-columns: 1fr;
+  }
+  .dataScopeBox {
+    padding: 18px;
+  }
+}
+

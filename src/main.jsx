@@ -22,6 +22,7 @@ import jobsImg from './assets/service-jobs.png';
 
 import { MwaySection, MwayAppPage, MwayLogo, MWAY_TAGLINE } from './mway.jsx';
 import { DownloadPage } from './pages/DownloadPage.jsx';
+import { DeleteAccountPage } from './pages/DeleteAccountPage.jsx';
 import {
   PrivacyPolicy, TermsAndConditions, RefundCancellationPolicy,
   ContactUsPage, AccountDeletion, DriverTermsPolicy, DriverPrivacyPolicy
@@ -1079,7 +1080,7 @@ function Footer() {
         <Link to="/driver-terms">Driver Partner Terms</Link>
         <Link to="/driver-privacy">Driver Privacy Policy</Link>
         <Link to="/contact">Contact Us</Link>
-        <Link to="/account-deletion">Account Deletion</Link>
+        <Link to="/delete-account">Delete Account</Link>
         <Link to="/mway-app">MWAY App Info</Link>
       </div>
 
@@ -1154,7 +1155,8 @@ function App() {
           <Route path="/refund-cancellation-policy" element={<RefundCancellationPolicy />} />
           <Route path="/driver-terms" element={<DriverTermsPolicy />} />
           <Route path="/driver-privacy" element={<DriverPrivacyPolicy />} />
-          <Route path="/account-deletion" element={<AccountDeletion />} />
+          <Route path="/delete-account" element={<DeleteAccountPage />} />
+          <Route path="/account-deletion" element={<Navigate to="/delete-account" replace />} />
 
           {/* Canonical 301 Redirects for Alias & Duplicate URLs */}
           <Route path="/download-app" element={<Navigate to="/download" replace />} />

@@ -190,7 +190,7 @@ export function MwayAppPage() {
           <p>
             See the <Link to="/privacy-policy">Privacy Policy</Link> for what
             the app stores and why, and{' '}
-            <Link to="/account-deletion">Account and Data Deletion</Link> for
+            <Link to="/delete-account">Account and Data Deletion</Link> for
             how to ask for your account and data to be removed.
           </p>
         </div>
